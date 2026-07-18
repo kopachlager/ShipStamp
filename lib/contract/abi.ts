@@ -1,5 +1,22 @@
 export const shipStampRegistryAbi = [
   {
+    type: "error",
+    name: "StampNotFound",
+    inputs: [{ name: "stampId", type: "uint256" }],
+  },
+  {
+    type: "error",
+    name: "DuplicateStamp",
+    inputs: [{ name: "duplicateKey", type: "bytes32" }],
+  },
+  {
+    type: "function",
+    name: "totalStamps",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+  {
     type: "function",
     name: "stampBuild",
     stateMutability: "nonpayable",
@@ -92,4 +109,3 @@ export const shipStampRegistryAbi = [
     ],
   },
 ] as const;
-
