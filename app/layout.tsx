@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Web3Provider } from "@/components/shipstamp/Web3Provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,33 +16,34 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
-        <header className="border-b border-[var(--rule)]">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-            <Link
-              href="/"
-              className="font-black tracking-[-0.05em] no-underline"
-              aria-label="ShipStamp home"
-            >
-              SHIP<span className="text-[var(--stamp)]">STAMP</span>
-            </Link>
-            <nav aria-label="Primary" className="flex items-center gap-5 text-sm font-semibold">
-              <Link href="/about" className="underline-offset-4 hover:underline">
-                About
-              </Link>
-              <a
-                href="https://github.com/kopachlager/ShipStamp"
-                target="_blank"
-                rel="noreferrer"
-                className="underline-offset-4 hover:underline"
+        <Web3Provider>
+          <header className="border-b border-[var(--rule)]">
+            <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
+              <Link
+                href="/"
+                className="font-black tracking-[-0.05em] no-underline"
+                aria-label="ShipStamp home"
               >
-                GitHub ↗
-              </a>
-            </nav>
-          </div>
-        </header>
-        {children}
+                SHIP<span className="text-[var(--stamp)]">STAMP</span>
+              </Link>
+              <nav aria-label="Primary" className="flex items-center gap-5 text-sm font-semibold">
+                <Link href="/about" className="underline-offset-4 hover:underline">
+                  About
+                </Link>
+                <a
+                  href="https://github.com/kopachlager/ShipStamp"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline-offset-4 hover:underline"
+                >
+                  GitHub ↗
+                </a>
+              </nav>
+            </div>
+          </header>
+          {children}
+        </Web3Provider>
       </body>
     </html>
   );
 }
-
