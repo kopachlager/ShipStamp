@@ -49,8 +49,7 @@ export function CommitPreview({ commit }: { commit: VerifiedGitHubCommit }) {
         </div>
       </dl>
       <p className="mt-5 border-t border-border pt-4 font-mono text-[0.65rem] leading-5 text-muted-foreground">
-        GitHub author metadata is display information. It does not connect that
-        identity to the wallet creating this claim.
+        GitHub author metadata is not wallet identity.
       </p>
     </section>
   );

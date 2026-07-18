@@ -26,13 +26,8 @@ export function Footer10({ links, className }: Footer10Props) {
             <span className="text-primary">[</span>SHIPSTAMP
             <span className="text-primary">]</span>
           </Link>
-          <p className="mt-3 max-w-md text-xs leading-5 text-muted-foreground">
-            Public, wallet-signed build claims on Monad Testnet. A receipt
-            records a claim; it does not prove authorship or deployment
-            integrity.
-          </p>
-          <p className="mt-5 font-mono text-[0.58rem] tracking-[0.08em] text-muted-foreground uppercase">
-            Interface references from{" "}
+          <p className="mt-4 font-mono text-[0.58rem] tracking-[0.08em] text-muted-foreground uppercase">
+            UI references:{" "}
             <a
               href="https://ui.beste.co/blocks"
               target="_blank"
@@ -41,7 +36,6 @@ export function Footer10({ links, className }: Footer10Props) {
             >
               Beste UI
             </a>
-            . Built with shadcn/ui.
           </p>
         </div>
         <nav

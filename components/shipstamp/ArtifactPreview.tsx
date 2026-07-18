@@ -55,9 +55,7 @@ export function ArtifactPreview({
         </div>
       </dl>
       <p className="mt-5 border-t border-border pt-4 font-mono text-[0.65rem] leading-5 text-muted-foreground">
-        ShipStamp records this claim and hash. It does not download or hash the
-        deployment files, and it does not prove the deployment serves this
-        commit.
+        This hashes the submitted identifiers—not deployed files.
       </p>
     </section>
   );

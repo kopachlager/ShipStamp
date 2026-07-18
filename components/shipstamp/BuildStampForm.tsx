@@ -236,17 +236,16 @@ export function BuildStampForm() {
 
   return (
     <section
-      className="overflow-hidden rounded-xl bg-card shadow-[0_24px_80px_rgb(0_0_0/0.22)]"
+      className="overflow-hidden rounded-xl bg-card"
       aria-labelledby="stamp-form-heading"
     >
       <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-5 sm:px-7">
         <div>
-          <p className="technical-label text-primary">Entry terminal / 01</p>
           <h2
             id="stamp-form-heading"
-            className="mt-1 font-heading text-3xl leading-none"
+            className="font-heading text-3xl leading-none"
           >
-            Issue a build record
+            Create a receipt
           </h2>
         </div>
         <div className="w-full sm:w-auto">
@@ -332,9 +331,7 @@ export function BuildStampForm() {
                 htmlFor="claim-confirmation"
                 className="max-w-xl text-sm leading-6 font-normal text-muted-foreground"
               >
-                I understand this records a wallet-signed build claim on Monad.
-                It does not prove repository ownership or that the deployment
-                serves this commit.
+                This is a public build claim, not proof of repository ownership.
               </FieldLabel>
             </Field>
 

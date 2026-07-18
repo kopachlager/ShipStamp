@@ -6,7 +6,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import type { Group } from "three";
 import { AsciiEffect } from "three/examples/jsm/effects/AsciiEffect.js";
 
-const ASCII_RAMP = " .,:;i1tfLCG08@";
+const ASCII_RAMP = "@80GCLft1i;:,. ";
 
 export function AsciiStamp() {
   return (
@@ -15,10 +15,6 @@ export function AsciiStamp() {
       role="img"
       aria-label="Interactive ASCII rendering of a rotating rubber stamp"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-3 font-mono text-[0.56rem] tracking-[0.1em] text-muted-foreground uppercase">
-        <span>Object / proof stamp</span>
-        <span>Drag to inspect</span>
-      </div>
       <div className="absolute inset-0 z-[1] sm:hidden">
         <StaticStamp />
       </div>
@@ -43,10 +39,6 @@ export function AsciiStamp() {
           <AsciiPass />
         </Canvas>
       </div>
-      <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-center gap-3 bg-[#0b0a09]/75 px-4 py-3 font-mono text-[0.56rem] tracking-[0.08em] text-muted-foreground uppercase backdrop-blur-sm">
-        <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
-        Live mesh converted to characters
-      </figcaption>
     </figure>
   );
 }

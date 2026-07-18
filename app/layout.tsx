@@ -4,6 +4,7 @@ import { Web3Provider } from "@/components/shipstamp/Web3Provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer10 } from "@/components/beste/block/footer10";
+import "@fontsource-variable/newsreader";
 import "@fontsource-variable/ibm-plex-sans";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
@@ -28,7 +29,7 @@ export default function RootLayout({
           <TooltipProvider>
             <header className="bg-background/95 backdrop-blur-sm">
               <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
-                <div className="flex items-center gap-5">
+                <div className="flex items-center">
                   <Link
                     href="/"
                     className="font-mono text-sm font-medium tracking-[-0.03em] no-underline"
@@ -37,13 +38,6 @@ export default function RootLayout({
                     <span className="text-primary">[</span>SHIPSTAMP
                     <span className="text-primary">]</span>
                   </Link>
-                  <span
-                    className="hidden h-3 w-px bg-border sm:block"
-                    aria-hidden="true"
-                  />
-                  <span className="technical-label hidden sm:block">
-                    Registry interface · Testnet
-                  </span>
                 </div>
                 <nav
                   aria-label="Primary"

@@ -12,11 +12,8 @@ import { monadTestnet } from "@/lib/chain/monad-testnet";
 export function NetworkIndicator() {
   const { chainId, isConnected } = useAccount();
   const correctNetwork = chainId === monadTestnet.id;
-  const label = !isConnected
-    ? "Wallet disconnected"
-    : correctNetwork
-      ? "Monad Testnet"
-      : "Wrong network";
+  const label =
+    isConnected && !correctNetwork ? "Wrong network" : "Monad Testnet";
 
   return (
     <Tooltip>
@@ -39,9 +36,11 @@ export function NetworkIndicator() {
         </Badge>
       </TooltipTrigger>
       <TooltipContent side="bottom">
-        {correctNetwork
-          ? "Connected to chain 10143"
-          : "ShipStamp writes only to Monad Testnet"}
+        {!isConnected
+          ? "Connect a wallet to continue"
+          : correctNetwork
+            ? "Connected to chain 10143"
+            : "Switch to Monad Testnet"}
       </TooltipContent>
     </Tooltip>
   );

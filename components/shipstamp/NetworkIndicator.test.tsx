@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NetworkIndicator } from "./NetworkIndicator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -13,14 +13,16 @@ vi.mock("wagmi", () => ({
 }));
 
 describe("NetworkIndicator", () => {
+  afterEach(cleanup);
+
   beforeEach(() => {
     accountState.isConnected = false;
     accountState.chainId = undefined;
   });
 
-  it("shows the disconnected state", () => {
+  it("shows the target network while disconnected", () => {
     renderIndicator();
-    expect(screen.getByText("Wallet disconnected")).toBeInTheDocument();
+    expect(screen.getByText("Monad Testnet")).toBeInTheDocument();
   });
 
   it("shows a wrong-network state", () => {

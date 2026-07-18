@@ -96,14 +96,8 @@ function getGitHubCommitUrl(repository: string, commitSha: string) {
 
 export function EmptyTimeline() {
   return (
-    <div className="rounded-xl bg-background/35 p-8">
-      <p className="technical-label text-primary">
-        Registry response / 0 entries
-      </p>
-      <p className="mt-3 max-w-lg text-sm leading-6 text-muted-foreground">
-        This project has no onchain ShipStamp milestones yet. No sample activity
-        is substituted.
-      </p>
+    <div className="rounded-xl bg-background/35 p-8" role="status">
+      <p className="text-sm text-muted-foreground">No receipts yet.</p>
     </div>
   );
 }
