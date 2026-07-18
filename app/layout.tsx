@@ -3,10 +3,12 @@ import Link from "next/link";
 import { Web3Provider } from "@/components/shipstamp/Web3Provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { Footer10 } from "@/components/beste/block/footer10";
+import "@fontsource/barlow-condensed/600.css";
+import "@fontsource/barlow-condensed/700.css";
 import "@fontsource-variable/ibm-plex-sans";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
-import "@fontsource/instrument-serif";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,7 +20,9 @@ export const metadata: Metadata = {
     "Verify a GitHub commit, connect it to a live deployment, and permanently stamp the build on Monad.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="dark">
       <body>
@@ -32,13 +36,25 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     className="font-mono text-sm font-medium tracking-[-0.03em] no-underline"
                     aria-label="ShipStamp home"
                   >
-                    <span className="text-primary">[</span>SHIPSTAMP<span className="text-primary">]</span>
+                    <span className="text-primary">[</span>SHIPSTAMP
+                    <span className="text-primary">]</span>
                   </Link>
-                  <span className="hidden h-3 w-px bg-border sm:block" aria-hidden="true" />
-                  <span className="technical-label hidden sm:block">Registry interface · Testnet</span>
+                  <span
+                    className="hidden h-3 w-px bg-border sm:block"
+                    aria-hidden="true"
+                  />
+                  <span className="technical-label hidden sm:block">
+                    Registry interface · Testnet
+                  </span>
                 </div>
-                <nav aria-label="Primary" className="flex items-center gap-5 font-mono text-[0.7rem] uppercase tracking-[0.08em]">
-                  <Link href="/about" className="text-muted-foreground transition-colors hover:text-foreground">
+                <nav
+                  aria-label="Primary"
+                  className="flex items-center gap-5 font-mono text-[0.7rem] uppercase tracking-[0.08em]"
+                >
+                  <Link
+                    href="/about"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
                     About
                   </Link>
                   <a
@@ -54,6 +70,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <div className="noise-band h-px opacity-80" aria-hidden="true" />
             </header>
             {children}
+            <Footer10
+              links={[
+                { label: "About", href: "/about" },
+                { label: "Contract", href: "https://testnet.monadscan.com" },
+                {
+                  label: "GitHub",
+                  href: "https://github.com/kopachlager/ShipStamp",
+                },
+              ]}
+            />
             <Toaster theme="dark" position="bottom-right" />
           </TooltipProvider>
         </Web3Provider>

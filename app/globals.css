@@ -51,7 +51,7 @@
 }
 
 @theme inline {
-  --font-heading: "Instrument Serif", Georgia, serif;
+  --font-heading: "Barlow Condensed", Arial Narrow, sans-serif;
   --font-sans: "IBM Plex Sans Variable", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", Consolas, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -114,7 +114,9 @@
     background-image:
       linear-gradient(rgb(255 255 255 / 0.022) 1px, transparent 1px),
       linear-gradient(90deg, rgb(255 255 255 / 0.016) 1px, transparent 1px);
-    background-size: 100% 32px, 80px 100%;
+    background-size:
+      100% 32px,
+      80px 100%;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
   }
@@ -151,9 +153,13 @@
 }
 
 .display-title {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.035em;
+  font-family:
+    "Barlow Condensed",
+    Arial Narrow,
+    sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
 }
 
 .technical-label {
