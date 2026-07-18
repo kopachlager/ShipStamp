@@ -83,9 +83,12 @@ function shortenAddress(address?: string) {
 }
 
 function getWalletError(error: unknown, fallback: string) {
-  if (error instanceof Error && /reject|denied|cancel/i.test(error.message)) {
-    return fallback;
+  if (error instanceof Error) {
+    if (/provider not found|connector not found|no provider/i.test(error.message)) {
+      return "No injected EVM wallet was detected. Install a compatible browser wallet.";
+    }
+    if (/reject|denied|cancel/i.test(error.message)) return fallback;
+    return error.message.split("\n")[0];
   }
-  return error instanceof Error ? error.message.split("\n")[0] : fallback;
+  return fallback;
 }
-
