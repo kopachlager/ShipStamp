@@ -1,5 +1,6 @@
 import { BuildStampForm } from "@/components/shipstamp/BuildStampForm";
 import { AsciiStamp } from "@/components/shipstamp/AsciiStamp";
+import { GitBranch } from "lucide-react";
 import {
   BuildTimeline,
   type TimelineEntry,
@@ -34,32 +35,51 @@ export default async function HomePage() {
 
   return (
     <main>
-      <section className="mx-auto grid max-w-7xl gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-start lg:gap-12">
-        <div>
-          <h1 className="display-title max-w-xl text-5xl leading-[0.98] sm:text-6xl lg:text-[4.25rem]">
-            Every build leaves a <span className="text-primary">receipt.</span>
-          </h1>
-          <p className="mt-6 max-w-md text-sm leading-6 text-muted-foreground sm:text-base">
-            Connect a public commit, a live deployment, and your wallet in one
-            Monad receipt.
-          </p>
-          <div className="mt-8">
-            <AsciiStamp />
+      <section className="min-h-[calc(100svh-3.5rem)]">
+        <div className="mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-7xl items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:py-16">
+          <div className="relative z-10">
+            <h1 className="display-title max-w-2xl text-6xl leading-[0.9] sm:text-7xl lg:text-[5.6rem]">
+              Every build leaves a{" "}
+              <span className="text-primary">receipt.</span>
+            </h1>
+            <p className="mt-7 max-w-md text-base leading-7 text-muted-foreground">
+              Connect a public commit, a live deployment, and your wallet in one
+              Monad receipt.
+            </p>
+            <a
+              href="#create-receipt"
+              className="mt-9 inline-flex items-center gap-3 font-mono text-xs tracking-[0.1em] text-foreground uppercase no-underline transition-colors hover:text-primary"
+            >
+              <GitBranch className="size-4 text-primary" aria-hidden="true" />
+              Start with a public commit <span className="text-primary">↓</span>
+            </a>
           </div>
+          <AsciiStamp />
         </div>
-        <BuildStampForm />
       </section>
 
-      <section className="bg-card/35">
-        <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
-          <h2 className="display-title mb-8 text-4xl sm:text-5xl">
+      <section id="create-receipt" className="bg-[#090b0d] scroll-mt-14">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.38fr_1fr] lg:gap-16">
+          <div>
+            <p className="flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-primary uppercase">
+              <GitBranch className="size-4" aria-hidden="true" />
+              GitHub → Monad
+            </p>
+            <h2 className="display-title mt-4 max-w-sm text-5xl leading-[0.95] sm:text-6xl">
+              Stamp what shipped.
+            </h2>
+          </div>
+          <BuildStampForm />
+        </div>
+      </section>
+
+      <section className="bg-background">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
+          <h2 className="display-title mb-10 text-4xl sm:text-5xl">
             ShipStamp build log
           </h2>
           {timelineMessage ? (
-            <div
-              className="border-y border-dashed border-border py-8"
-              role="status"
-            >
+            <div className="rounded-xl bg-card px-6 py-8" role="status">
               <p className="font-mono text-xs text-muted-foreground">
                 {timelineMessage}
               </p>

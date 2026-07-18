@@ -237,18 +237,10 @@ export function BuildStampForm() {
   return (
     <section
       className="overflow-hidden rounded-xl bg-card"
-      aria-labelledby="stamp-form-heading"
+      aria-label="Create a build receipt"
     >
-      <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-5 sm:px-7">
+      <div className="flex justify-end px-5 pt-5 sm:px-7">
         <div>
-          <h2
-            id="stamp-form-heading"
-            className="font-heading text-3xl leading-none"
-          >
-            Create a receipt
-          </h2>
-        </div>
-        <div className="w-full sm:w-auto">
           <NetworkIndicator />
         </div>
       </div>
