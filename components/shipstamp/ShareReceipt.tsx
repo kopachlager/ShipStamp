@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export function ShareReceipt({ path, text }: { path: string; text: string }) {
   const [status, setStatus] = useState<"idle" | "copied" | "shared" | "error">("idle");
@@ -11,6 +13,7 @@ export function ShareReceipt({ path, text }: { path: string; text: string }) {
     try {
       await navigator.clipboard.writeText(getUrl());
       setStatus("copied");
+      toast.success("Receipt link copied");
     } catch {
       setStatus("error");
     }
@@ -32,14 +35,13 @@ export function ShareReceipt({ path, text }: { path: string; text: string }) {
 
   return (
     <div className="flex flex-wrap gap-4" aria-live="polite">
-      <button type="button" onClick={copy} className="font-semibold underline underline-offset-4">
+      <Button type="button" onClick={copy} variant="link">
         {status === "copied" ? "Receipt link copied" : "Copy receipt link"}
-      </button>
-      <button type="button" onClick={share} className="font-semibold underline underline-offset-4">
+      </Button>
+      <Button type="button" onClick={share} variant="link">
         {status === "shared" ? "Shared" : "Share receipt"}
-      </button>
+      </Button>
       {status === "error" ? <span className="text-[var(--stamp-dark)]">Sharing was unavailable.</span> : null}
     </div>
   );
 }
-

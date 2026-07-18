@@ -1,6 +1,8 @@
 "use client";
 
 import { useAccount } from "wagmi";
+import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { monadTestnet } from "@/lib/chain/monad-testnet";
 
 export function NetworkIndicator() {
@@ -13,15 +15,21 @@ export function NetworkIndicator() {
       : "Wrong network";
 
   return (
-    <div className="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.1em]">
-      <span
-        aria-hidden="true"
-        className={`h-2 w-2 rounded-full ${
-          !isConnected ? "bg-[var(--muted)]" : correctNetwork ? "bg-emerald-700" : "bg-[var(--stamp)]"
-        }`}
-      />
-      <span>{label}</span>
-    </div>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Badge variant="outline" className="h-7 gap-2 rounded-[2px] border-border bg-background px-2.5 font-mono text-[0.62rem] tracking-[0.1em] uppercase">
+          <span
+            aria-hidden="true"
+            className={`h-1.5 w-1.5 rounded-full ${
+              !isConnected ? "bg-muted-foreground" : correctNetwork ? "bg-[var(--success)]" : "bg-primary"
+            }`}
+          />
+          {label}
+        </Badge>
+      </TooltipTrigger>
+      <TooltipContent side="bottom">
+        {correctNetwork ? "Connected to chain 10143" : "ShipStamp writes only to Monad Testnet"}
+      </TooltipContent>
+    </Tooltip>
   );
 }
-

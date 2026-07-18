@@ -53,12 +53,12 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-16">
+      <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
       <div className="mb-7">
         <p className="technical-label">Public verification record</p>
-        <h1 className="mt-2 text-4xl font-black tracking-[-0.045em]">Build receipt #{stamp.id.toString()}</h1>
+        <h1 className="display-title mt-3 text-6xl">Build receipt #{stamp.id.toString()}</h1>
         {!github ? (
-          <p className="mt-3 text-sm text-[var(--muted)]">
+          <p className="mt-3 text-sm text-[var(--muted-foreground)]">
             GitHub metadata is currently unavailable; the onchain receipt remains readable below.
           </p>
         ) : null}
@@ -70,10 +70,10 @@ export default async function ReceiptPage({ params }: ReceiptPageProps) {
 
 function ReceiptState({ title, copy }: { title: string; copy: string }) {
   return (
-    <main className="mx-auto max-w-3xl px-5 py-20 sm:px-8">
-      <p className="technical-label">Receipt lookup</p>
-      <h1 className="mt-3 text-4xl font-black">{title}</h1>
-      <p className="mt-4 text-[var(--muted)]">{copy}</p>
+    <main className="mx-auto max-w-3xl px-5 py-24 sm:px-8">
+      <p className="technical-label text-primary">Receipt lookup / exception</p>
+      <h1 className="display-title mt-5 text-6xl">{title}</h1>
+      <p className="mt-5 text-muted-foreground">{copy}</p>
       <Link href="/" className="mt-8 inline-block font-semibold underline underline-offset-4">
         Return to ShipStamp
       </Link>

@@ -3,6 +3,9 @@ import { CopyField } from "@/components/shipstamp/CopyField";
 import { ExplorerLink } from "@/components/shipstamp/ExplorerLink";
 import { ShareReceipt } from "@/components/shipstamp/ShareReceipt";
 import { VerifiedStamp } from "@/components/shipstamp/VerifiedStamp";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { parseGitHubRepositoryUrl } from "@/lib/artifact/normalization";
 import { getExplorerAddressUrl } from "@/lib/chain/monad-testnet";
 import { SHIPSTAMP_CONTRACT_ADDRESS } from "@/lib/contract/config";
@@ -28,14 +31,17 @@ export function BuildReceipt({
   const projectPath = getProjectPath(stamp.repository);
 
   return (
-    <article className="relative border border-[var(--ink)] bg-[var(--paper-raised)] p-5 shadow-[6px_6px_0_var(--rule)] sm:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-5 border-b border-[var(--rule)] pb-6">
+    <article className="registry-frame relative border border-border bg-card p-5 shadow-[0_20px_70px_rgb(0_0_0/0.3)] sm:p-8">
+      <div className="flex flex-wrap items-start justify-between gap-5 pb-6">
         <div>
-          <p className="technical-label">Receipt no. {stamp.id.toString().padStart(6, "0")}</p>
-          <h2 className="mt-2 text-4xl font-black tracking-[-0.045em]">{heading}</h2>
+          <Badge variant="outline" className="rounded-[2px] border-border font-mono text-[0.6rem] tracking-[0.1em] uppercase">
+            Receipt / {stamp.id.toString().padStart(6, "0")}
+          </Badge>
+          <h2 className="display-title mt-4 text-5xl">{heading}</h2>
         </div>
         <VerifiedStamp />
       </div>
+      <Separator />
 
       <dl className="grid gap-x-8 gap-y-6 py-7 sm:grid-cols-2">
         <ReceiptField label="Repository" value={stamp.repository} />
@@ -66,20 +72,22 @@ export function BuildReceipt({
         ) : null}
       </dl>
 
-      <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-[var(--rule)] pt-6 text-sm">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border pt-6 text-sm">
         {github ? (
-          <a href={github.commitUrl} target="_blank" rel="noreferrer" className="font-semibold underline underline-offset-4">
-            Public GitHub commit ↗
-          </a>
+          <Button asChild variant="link">
+            <a href={github.commitUrl} target="_blank" rel="noreferrer">
+              Public GitHub commit ↗
+            </a>
+          </Button>
         ) : null}
         {transactionHash ? <ExplorerLink transactionHash={transactionHash} /> : null}
-        <Link href={receiptPath} className="font-semibold underline underline-offset-4">
-          Public receipt
-        </Link>
+        <Button asChild variant="link">
+          <Link href={receiptPath}>Public receipt</Link>
+        </Button>
         {projectPath ? (
-          <Link href={projectPath} className="font-semibold underline underline-offset-4">
-            Project timeline
-          </Link>
+          <Button asChild variant="link">
+            <Link href={projectPath}>Project timeline</Link>
+          </Button>
         ) : null}
         <ShareReceipt
           path={receiptPath}
@@ -103,7 +111,7 @@ function ReceiptField({ label, value, href }: { label: string; value: string; hr
   return (
     <div>
       <dt className="technical-label">{label}</dt>
-      <dd className="technical-value mt-1 text-sm leading-6">
+      <dd className="technical-value mt-1 text-xs leading-6 text-foreground/90">
         {href ? (
           <a href={href} target="_blank" rel="noreferrer" className="underline underline-offset-4">
             {value} ↗

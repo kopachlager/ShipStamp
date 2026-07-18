@@ -50,11 +50,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (failure) return <ProjectState title={failure.title} copy={failure.copy} />;
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-10 sm:px-8 sm:py-16">
-      <div className="mb-9 border-b border-[var(--ink)] pb-7">
-        <p className="technical-label">Chronological onchain manifest</p>
-        <h1 className="mt-2 break-words text-4xl font-black tracking-[-0.045em] sm:text-5xl">{repository}</h1>
-        <p className="mt-4 max-w-2xl text-[var(--muted)]">
+    <main className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-20">
+      <div className="mb-10 border-b border-border pb-8">
+        <p className="technical-label text-primary">Chronological onchain manifest</p>
+        <h1 className="display-title mt-4 break-words text-6xl sm:text-7xl">{repository}</h1>
+        <p className="mt-5 max-w-2xl text-muted-foreground">
           Public build claims read directly from ShipStampRegistry. A connected wallet is not required.
         </p>
         <a
@@ -73,10 +73,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
 function ProjectState({ title, copy }: { title: string; copy: string }) {
   return (
-    <main className="mx-auto max-w-3xl px-5 py-20 sm:px-8">
-      <p className="technical-label">Project manifest</p>
-      <h1 className="mt-3 text-4xl font-black">{title}</h1>
-      <p className="mt-4 text-[var(--muted)]">{copy}</p>
+    <main className="mx-auto max-w-3xl px-5 py-24 sm:px-8">
+      <p className="technical-label text-primary">Project manifest / exception</p>
+      <h1 className="display-title mt-5 text-6xl">{title}</h1>
+      <p className="mt-5 text-muted-foreground">{copy}</p>
       <Link href="/" className="mt-8 inline-block font-semibold underline underline-offset-4">
         Return to ShipStamp
       </Link>

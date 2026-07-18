@@ -1,15 +1,12 @@
 import { getExplorerTransactionUrl } from "@/lib/chain/monad-testnet";
+import { Button } from "@/components/ui/button";
 
 export function ExplorerLink({ transactionHash }: { transactionHash: string }) {
   return (
-    <a
-      href={getExplorerTransactionUrl(transactionHash)}
-      target="_blank"
-      rel="noreferrer"
-      className="font-semibold underline decoration-[var(--rule)] underline-offset-4 hover:decoration-[var(--ink)]"
-    >
-      View transaction ↗
-    </a>
+    <Button asChild variant="link">
+      <a href={getExplorerTransactionUrl(transactionHash)} target="_blank" rel="noreferrer">
+        View transaction ↗
+      </a>
+    </Button>
   );
 }
-

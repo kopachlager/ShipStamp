@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { SearchCheck, Stamp } from "lucide-react";
 import { parseEventLogs } from "viem";
 import { useAccount, usePublicClient, useWriteContract } from "wagmi";
 import { ArtifactPreview } from "@/components/shipstamp/ArtifactPreview";
@@ -12,6 +13,13 @@ import {
   type TransactionStage,
 } from "@/components/shipstamp/TransactionProgress";
 import { WalletControl } from "@/components/shipstamp/WalletControl";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Field, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { getExplorerTransactionUrl, monadTestnet } from "@/lib/chain/monad-testnet";
 import { shipStampRegistryAbi } from "@/lib/contract/abi";
 import { SHIPSTAMP_CONTRACT_ADDRESS } from "@/lib/contract/config";
@@ -199,23 +207,25 @@ export function BuildStampForm() {
   };
 
   return (
-    <section className="border border-[var(--ink)] bg-[var(--paper-raised)]" aria-labelledby="stamp-form-heading">
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--rule)] px-5 py-4 sm:px-7">
+    <section className="registry-frame border border-border bg-card shadow-[0_24px_80px_rgb(0_0_0/0.28)]" aria-labelledby="stamp-form-heading">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-5 py-4 sm:px-7">
         <div>
-          <p className="technical-label">New build manifest</p>
-          <h2 id="stamp-form-heading" className="mt-1 text-2xl font-black tracking-[-0.035em]">
-            Verify, then stamp.
+          <p className="technical-label text-primary">Entry terminal / 01</p>
+          <h2 id="stamp-form-heading" className="mt-1 font-heading text-3xl leading-none">
+            Issue a build record
           </h2>
         </div>
-        <NetworkIndicator />
+        <div className="w-full sm:w-auto">
+          <NetworkIndicator />
+        </div>
       </div>
 
-      <div className="border-b border-[var(--rule)] px-5 py-5 sm:px-7">
+      <div className="border-b border-border bg-background/40 px-5 py-5 sm:px-7">
         <WalletControl />
       </div>
 
       <form onSubmit={verifyBuild} noValidate className="p-5 sm:p-7">
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2">
           <FormField
             id="repository-url"
             label="Public GitHub repository URL"
@@ -238,80 +248,88 @@ export function BuildStampForm() {
             placeholder="https://your-build.example"
             onChange={(value) => updateInput("deploymentUrl", value)}
           />
-          <div>
-            <label htmlFor="milestone" className="technical-label block">
+          <Field>
+            <FieldLabel htmlFor="milestone" className="technical-label">
               Milestone description
-            </label>
-            <textarea
+            </FieldLabel>
+            <Textarea
               id="milestone"
               value={input.milestone}
               onChange={(event) => updateInput("milestone", event.target.value)}
               rows={3}
               maxLength={280}
               placeholder="What genuinely shipped in this build?"
-              className="mt-2 w-full resize-y border border-[var(--rule)] bg-transparent px-3 py-3 text-sm outline-none focus:border-[var(--ink)]"
+              className="min-h-24 resize-y rounded-[2px] border-input bg-background/60 font-sans text-sm placeholder:text-muted-foreground/60 focus-visible:border-primary focus-visible:ring-primary/20"
             />
-          </div>
+          </Field>
         </div>
 
         {error && stage !== "error" ? (
-          <div className="mt-5 border-l-4 border-[var(--stamp)] bg-red-50 px-4 py-3 text-sm text-[var(--stamp-dark)]" role="alert">
-            {error}
-          </div>
+          <Alert variant="destructive" className="mt-6 rounded-[2px] border-destructive/40 bg-destructive/5">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
         ) : null}
 
-        <button
+        <Button
           type="submit"
           disabled={isVerifying}
-          className="mt-6 border border-[var(--ink)] bg-[var(--ink)] px-6 py-3 text-sm font-bold text-[var(--paper-raised)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-7"
+          size="lg"
         >
+          <SearchCheck data-icon="inline-start" />
           {isVerifying ? "Verifying with GitHub…" : "Verify build"}
-        </button>
+        </Button>
 
         {verification ? (
-          <div className="mt-8 space-y-7" aria-live="polite">
+          <div className="mt-9 space-y-7" aria-live="polite">
+            <Separator />
             <CommitPreview commit={verification.github} />
             <ArtifactPreview claim={verification.claim} wallet={address} />
 
-            <label className="flex items-start gap-3 border-t border-[var(--rule)] pt-6 text-sm leading-6">
-              <input
-                type="checkbox"
+            <Field orientation="horizontal" className="items-start border-t border-border pt-6">
+              <Checkbox
+                id="claim-confirmation"
                 checked={confirmed}
-                onChange={(event) => setConfirmed(event.target.checked)}
-                className="mt-1 h-4 w-4 accent-[var(--stamp)]"
+                onCheckedChange={(value) => setConfirmed(value === true)}
+                className="mt-1 rounded-[1px]"
               />
-              <span>
+              <FieldLabel htmlFor="claim-confirmation" className="max-w-xl text-sm leading-6 font-normal text-muted-foreground">
                 I understand this records a wallet-signed build claim on Monad. It does not prove
                 repository ownership or that the deployment serves this commit.
-              </span>
-            </label>
+              </FieldLabel>
+            </Field>
 
-            <button
+            <Button
               type="button"
               onClick={stampBuild}
               disabled={!confirmed || stage === "awaiting-approval" || stage === "pending" || stage === "reading-receipt"}
-              className="border-2 border-[var(--stamp)] bg-[var(--stamp)] px-6 py-3 text-sm font-black text-white disabled:cursor-not-allowed disabled:opacity-50"
+              size="lg"
             >
+              <Stamp data-icon="inline-start" />
               Stamp this build
-            </button>
+            </Button>
 
             <TransactionProgress stage={stage} error={stage === "error" ? error : null} />
             {transactionHash && stage !== "confirmed" ? (
+              <Button
+                asChild
+                variant="link"
+              >
               <a
                 href={getExplorerTransactionUrl(transactionHash)}
                 target="_blank"
                 rel="noreferrer"
-                className="block text-sm font-semibold underline underline-offset-4"
               >
                 Inspect pending transaction ↗
               </a>
+              </Button>
             ) : null}
           </div>
         ) : null}
       </form>
 
       {createdStamp ? (
-        <div className="border-t border-[var(--ink)] p-5 sm:p-7">
+        <div className="border-t border-border bg-background/30 p-5 sm:p-7">
           <BuildReceipt
             stamp={createdStamp}
             transactionHash={transactionHash}
@@ -339,20 +357,20 @@ function FormField({
   mono?: boolean;
 }) {
   return (
-    <div>
-      <label htmlFor={id} className="technical-label block">
+    <Field>
+      <FieldLabel htmlFor={id} className="technical-label">
         {label}
-      </label>
-      <input
+      </FieldLabel>
+      <Input
         id={id}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
         autoComplete="off"
         spellCheck={false}
-        className={`mt-2 w-full border border-[var(--rule)] bg-transparent px-3 py-3 text-sm outline-none focus:border-[var(--ink)] ${mono ? "font-mono" : ""}`}
+        className={`h-11 rounded-[2px] border-input bg-background/60 px-3 text-sm placeholder:text-muted-foreground/60 focus-visible:border-primary focus-visible:ring-primary/20 ${mono ? "font-mono text-xs" : ""}`}
       />
-    </div>
+    </Field>
   );
 }
 
@@ -366,4 +384,3 @@ function getTransactionError(error: unknown) {
   if (/revert/i.test(message)) return "The transaction reverted. No build receipt was created.";
   return message.split("\n")[0];
 }
-

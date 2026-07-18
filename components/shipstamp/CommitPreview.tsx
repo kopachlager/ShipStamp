@@ -1,20 +1,24 @@
 import type { VerifiedGitHubCommit } from "@/lib/github/types";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export function CommitPreview({ commit }: { commit: VerifiedGitHubCommit }) {
   return (
-    <section className="border-t border-[var(--rule)] pt-6" aria-labelledby="verified-commit-heading">
+    <section className="border border-border bg-background/40 p-5" aria-labelledby="verified-commit-heading">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 id="verified-commit-heading" className="text-lg font-bold">
-          Public GitHub commit verified
-        </h3>
-        <a
-          href={commit.commitUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="text-sm font-semibold underline underline-offset-4"
-        >
-          Inspect commit ↗
-        </a>
+        <div>
+          <Badge variant="outline" className="rounded-[2px] border-[var(--success)]/40 bg-[var(--success)]/5 font-mono text-[0.62rem] tracking-[0.1em] text-[var(--success)] uppercase">
+            GitHub response / verified
+          </Badge>
+          <h3 id="verified-commit-heading" className="mt-3 font-heading text-2xl">
+            Public commit located
+          </h3>
+        </div>
+        <Button asChild variant="outline" size="sm">
+          <a href={commit.commitUrl} target="_blank" rel="noreferrer">
+            Inspect commit ↗
+          </a>
+        </Button>
       </div>
       <dl className="mt-5 grid gap-5 sm:grid-cols-2">
         <PreviewField label="Repository" value={commit.repositoryFullName} />
@@ -28,7 +32,7 @@ export function CommitPreview({ commit }: { commit: VerifiedGitHubCommit }) {
           <PreviewField label="Commit message" value={commit.commitMessage} mono={false} />
         </div>
       </dl>
-      <p className="mt-5 text-xs leading-5 text-[var(--muted)]">
+      <p className="mt-5 border-t border-border pt-4 font-mono text-[0.65rem] leading-5 text-muted-foreground">
         GitHub author metadata is display information. It does not connect that identity to the
         wallet creating this claim.
       </p>
@@ -44,4 +48,3 @@ function PreviewField({ label, value, mono = true }: { label: string; value: str
     </div>
   );
 }
-

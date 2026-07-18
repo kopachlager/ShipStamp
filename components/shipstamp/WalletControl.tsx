@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { monadTestnet } from "@/lib/chain/monad-testnet";
 
 export function WalletControl() {
@@ -37,43 +39,52 @@ export function WalletControl() {
   if (!isConnected) {
     return (
       <div>
-        <button
+        <Button
           type="button"
           onClick={connect}
           disabled={isConnecting}
-          className="border border-[var(--ink)] bg-[var(--ink)] px-5 py-3 text-sm font-bold text-[var(--paper-raised)] disabled:cursor-not-allowed disabled:opacity-60"
+          size="lg"
         >
           {isConnecting ? "Connecting wallet…" : "Connect wallet"}
-        </button>
-        {error ? <p className="mt-2 max-w-sm text-sm text-[var(--stamp-dark)]" role="alert">{error}</p> : null}
+        </Button>
+        {error ? (
+          <Alert variant="destructive" className="mt-3 max-w-md rounded-[2px]">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        ) : null}
       </div>
     );
   }
 
   return (
     <div className="flex flex-wrap items-start gap-3">
-      <div>
+      <div className="min-w-44">
         <p className="technical-label">Connected builder</p>
         <p className="technical-value mt-1 text-xs">{shortenAddress(address)}</p>
       </div>
       {chainId !== monadTestnet.id ? (
-        <button
+        <Button
           type="button"
           onClick={switchNetwork}
           disabled={isSwitching}
-          className="border border-[var(--stamp)] px-4 py-2 text-sm font-bold text-[var(--stamp-dark)]"
+          variant="outline"
         >
           {isSwitching ? "Switching…" : "Switch to Monad Testnet"}
-        </button>
+        </Button>
       ) : null}
-      <button
+      <Button
         type="button"
         onClick={() => disconnect()}
-        className="border-b border-[var(--ink)] text-sm font-semibold"
+        variant="ghost"
+        size="sm"
       >
         Disconnect
-      </button>
-      {error ? <p className="basis-full text-sm text-[var(--stamp-dark)]" role="alert">{error}</p> : null}
+      </Button>
+      {error ? (
+        <Alert variant="destructive" className="basis-full rounded-[2px]">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      ) : null}
     </div>
   );
 }

@@ -1,3 +1,6 @@
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { LoaderCircle } from "lucide-react";
+
 export type TransactionStage =
   | "idle"
   | "awaiting-approval"
@@ -19,14 +22,15 @@ export function TransactionProgress({ stage, error }: { stage: TransactionStage;
   if (stage === "idle") return null;
 
   return (
-    <div
-      className={`border-l-4 px-4 py-3 ${stage === "error" ? "border-[var(--stamp)] bg-red-50" : "border-[var(--ink)] bg-[var(--paper)]"}`}
+    <Alert
+      variant={stage === "error" ? "destructive" : "default"}
+      className="rounded-[2px] border-border bg-muted/50"
       role={stage === "error" ? "alert" : "status"}
       aria-live="polite"
     >
-      <p className="font-bold">{stageText[stage]}</p>
-      {error ? <p className="mt-1 text-sm text-[var(--stamp-dark)]">{error}</p> : null}
-    </div>
+      {stage !== "error" && stage !== "confirmed" ? <LoaderCircle className="animate-spin" /> : null}
+      <AlertTitle>{stageText[stage]}</AlertTitle>
+      {error ? <AlertDescription>{error}</AlertDescription> : null}
+    </Alert>
   );
 }
-
