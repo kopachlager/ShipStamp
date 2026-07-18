@@ -1,0 +1,5 @@
+export const MAX_REPOSITORY_URL_LENGTH = 300;
+export const COMMIT_SHA_LENGTH = 40;
+export const MAX_DEPLOYMENT_URL_LENGTH = 2_048;
+export const MAX_MILESTONE_BYTES = 280;
+
