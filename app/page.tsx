@@ -1,4 +1,5 @@
 import { BuildStampForm } from "@/components/shipstamp/BuildStampForm";
+import { AsciiStamp } from "@/components/shipstamp/AsciiStamp";
 import {
   BuildTimeline,
   type TimelineEntry,
@@ -45,8 +46,8 @@ export default async function HomePage() {
         </div>
       </div>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-14">
-        <div className="lg:sticky lg:top-8">
+      <section className="mx-auto grid max-w-7xl gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[0.88fr_1.12fr] lg:items-start lg:gap-12">
+        <div>
           <div className="flex flex-wrap items-center gap-3">
             <p className="technical-label text-primary">Build claim registry</p>
             <Badge
@@ -56,28 +57,24 @@ export default async function HomePage() {
               Monad / 10143
             </Badge>
           </div>
-          <h1 className="display-title mt-7 max-w-2xl text-[4.35rem] leading-[0.76] sm:text-[7.25rem] lg:text-[8.25rem]">
-            Every build
-            <br />
-            leaves a <br className="sm:hidden" />
-            <span className="text-primary">receipt.</span>
+          <h1 className="display-title mt-7 max-w-xl text-5xl leading-[0.98] sm:text-6xl lg:text-[4.25rem]">
+            Every build leaves a <span className="text-primary">receipt.</span>
           </h1>
           <p className="mt-8 max-w-lg border-l border-primary pl-5 text-sm leading-6 text-muted-foreground sm:text-base">
             Verify a GitHub commit, connect it to a live deployment, and
             permanently stamp the build on Monad.
           </p>
-          <div className="mt-10 grid grid-cols-[3.8rem_1fr] gap-x-3 border-y border-border py-5 font-mono text-[0.58rem] leading-5 uppercase sm:grid-cols-[auto_1fr] sm:gap-x-5 sm:text-[0.62rem]">
-            <span className="text-primary">Payload</span>
-            <span className="min-w-0 text-muted-foreground">
-              Repository / Commit / Deployment
-              <span className="hidden sm:inline"> / </span>
-              <br className="sm:hidden" />
-              <span className="sm:hidden">/ </span>
-              Milestone / Wallet / Hash
+          <div className="mt-8">
+            <AsciiStamp />
+          </div>
+          <div className="grid grid-cols-[3.8rem_1fr] gap-x-3 border-x border-b border-border px-3 py-4 font-mono text-[0.56rem] leading-5 uppercase sm:grid-cols-[auto_1fr] sm:gap-x-5">
+            <span className="text-primary">Input</span>
+            <span className="text-muted-foreground">
+              Commit · Deployment · Wallet
             </span>
             <span className="text-primary">Output</span>
-            <span className="break-words text-muted-foreground">
-              Immutable timestamped contract record
+            <span className="text-muted-foreground">
+              Public contract receipt
             </span>
           </div>
         </div>

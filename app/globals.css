@@ -51,7 +51,7 @@
 }
 
 @theme inline {
-  --font-heading: "Barlow Condensed", Arial Narrow, sans-serif;
+  --font-heading: "IBM Plex Sans Variable", Arial, sans-serif;
   --font-sans: "IBM Plex Sans Variable", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", Consolas, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -153,13 +153,9 @@
 }
 
 .display-title {
-  font-family:
-    "Barlow Condensed",
-    Arial Narrow,
-    sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
+  font-family: "IBM Plex Sans Variable", Arial, sans-serif;
+  font-weight: 550;
+  letter-spacing: -0.055em;
 }
 
 .technical-label {
