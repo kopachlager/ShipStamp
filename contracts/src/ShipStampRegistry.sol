@@ -174,11 +174,11 @@ contract ShipStampRegistry {
     }
 
     /// @notice Computes the canonical artifact hash enforced during creation.
-    function computeArtifactHash(string calldata repository, string calldata commitSha, string calldata deploymentUrl)
-        public
-        pure
-        returns (bytes32)
-    {
+    function computeArtifactHash(
+        string calldata repository,
+        string calldata commitSha,
+        string calldata deploymentUrl
+    ) public pure returns (bytes32) {
         return keccak256(bytes(string.concat(repository, ":", commitSha, ":", deploymentUrl)));
     }
 
@@ -191,7 +191,10 @@ contract ShipStampRegistry {
     ) public pure returns (bytes32) {
         return keccak256(
             abi.encode(
-                builder, keccak256(bytes(repository)), keccak256(bytes(commitSha)), keccak256(bytes(deploymentUrl))
+                builder,
+                keccak256(bytes(repository)),
+                keccak256(bytes(commitSha)),
+                keccak256(bytes(deploymentUrl))
             )
         );
     }
