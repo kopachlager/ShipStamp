@@ -37,7 +37,7 @@ export default async function HomePage() {
 
   return (
     <main>
-      <div className="border-b border-border bg-[#07090a]">
+      <div className="bg-card/45">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-2.5 font-mono text-[0.58rem] tracking-[0.1em] text-muted-foreground uppercase sm:px-8">
           <span>Proof-of-build protocol / SS—01</span>
           <span className="hidden sm:inline">
@@ -52,7 +52,7 @@ export default async function HomePage() {
             <p className="technical-label text-primary">Build claim registry</p>
             <Badge
               variant="outline"
-              className="rounded-[2px] border-border bg-muted/40 font-mono text-[0.58rem] tracking-[0.1em] uppercase"
+              className="rounded-full border-border/70 bg-muted/40 font-mono text-[0.58rem] tracking-[0.1em] uppercase"
             >
               Monad / 10143
             </Badge>
@@ -60,29 +60,18 @@ export default async function HomePage() {
           <h1 className="display-title mt-7 max-w-xl text-5xl leading-[0.98] sm:text-6xl lg:text-[4.25rem]">
             Every build leaves a <span className="text-primary">receipt.</span>
           </h1>
-          <p className="mt-8 max-w-lg border-l border-primary pl-5 text-sm leading-6 text-muted-foreground sm:text-base">
+          <p className="mt-8 max-w-lg text-sm leading-6 text-muted-foreground sm:text-base">
             Verify a GitHub commit, connect it to a live deployment, and
             permanently stamp the build on Monad.
           </p>
           <div className="mt-8">
             <AsciiStamp />
           </div>
-          <div className="grid grid-cols-[3.8rem_1fr] gap-x-3 border-x border-b border-border px-3 py-4 font-mono text-[0.56rem] leading-5 uppercase sm:grid-cols-[auto_1fr] sm:gap-x-5">
-            <span className="text-primary">Input</span>
-            <span className="text-muted-foreground">
-              Commit · Deployment · Wallet
-            </span>
-            <span className="text-primary">Output</span>
-            <span className="text-muted-foreground">
-              Public contract receipt
-            </span>
-          </div>
         </div>
         <BuildStampForm />
       </section>
 
-      <section className="border-y border-border bg-[#0d1012]">
-        <div className="noise-band h-px" aria-hidden="true" />
+      <section className="bg-card/35">
         <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>

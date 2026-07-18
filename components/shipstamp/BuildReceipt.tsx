@@ -31,10 +31,13 @@ export function BuildReceipt({
   const projectPath = getProjectPath(stamp.repository);
 
   return (
-    <article className="registry-frame relative border border-border bg-card p-5 shadow-[0_20px_70px_rgb(0_0_0/0.3)] sm:p-8">
+    <article className="relative rounded-xl bg-card p-5 shadow-[0_20px_70px_rgb(0_0_0/0.24)] sm:p-8">
       <div className="flex flex-wrap items-start justify-between gap-5 pb-6">
         <div>
-          <Badge variant="outline" className="rounded-[2px] border-border font-mono text-[0.6rem] tracking-[0.1em] uppercase">
+          <Badge
+            variant="outline"
+            className="rounded-full border-border/70 font-mono text-[0.6rem] tracking-[0.1em] uppercase"
+          >
             Receipt / {stamp.id.toString().padStart(6, "0")}
           </Badge>
           <h2 className="display-title mt-4 text-5xl">{heading}</h2>
@@ -47,11 +50,18 @@ export function BuildReceipt({
         <ReceiptField label="Repository" value={stamp.repository} />
         <ReceiptField label="Milestone" value={stamp.milestone} />
         <ReceiptField label="Commit SHA" value={stamp.commitSha} />
-        <ReceiptField label="Block timestamp" value={`${formatTimestamp(stamp.timestamp)} UTC`} />
+        <ReceiptField
+          label="Block timestamp"
+          value={`${formatTimestamp(stamp.timestamp)} UTC`}
+        />
         <ReceiptField label="Builder wallet" value={stamp.builder} />
         <ReceiptField label="Network" value="Monad Testnet / 10143" />
         <div className="sm:col-span-2">
-          <ReceiptField label="Deployment claim" value={stamp.deploymentUrl} href={deploymentLink} />
+          <ReceiptField
+            label="Deployment claim"
+            value={stamp.deploymentUrl}
+            href={deploymentLink}
+          />
         </div>
         <div className="sm:col-span-2">
           <CopyField label="Artifact hash" value={stamp.artifactHash} />
@@ -80,7 +90,9 @@ export function BuildReceipt({
             </a>
           </Button>
         ) : null}
-        {transactionHash ? <ExplorerLink transactionHash={transactionHash} /> : null}
+        {transactionHash ? (
+          <ExplorerLink transactionHash={transactionHash} />
+        ) : null}
         <Button asChild variant="link">
           <Link href={receiptPath}>Public receipt</Link>
         </Button>
@@ -107,13 +119,26 @@ function getProjectPath(repository: string) {
   }
 }
 
-function ReceiptField({ label, value, href }: { label: string; value: string; href?: string | null }) {
+function ReceiptField({
+  label,
+  value,
+  href,
+}: {
+  label: string;
+  value: string;
+  href?: string | null;
+}) {
   return (
     <div>
       <dt className="technical-label">{label}</dt>
       <dd className="technical-value mt-1 text-xs leading-6 text-foreground/90">
         {href ? (
-          <a href={href} target="_blank" rel="noreferrer" className="underline underline-offset-4">
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="underline underline-offset-4"
+          >
             {value} ↗
           </a>
         ) : (

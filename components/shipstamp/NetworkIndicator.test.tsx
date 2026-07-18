@@ -3,7 +3,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { NetworkIndicator } from "./NetworkIndicator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const accountState = vi.hoisted(() => ({ isConnected: false, chainId: undefined as number | undefined }));
+const accountState = vi.hoisted(() => ({
+  isConnected: false,
+  chainId: undefined as number | undefined,
+}));
 
 vi.mock("wagmi", () => ({
   useAccount: () => accountState,

@@ -18,17 +18,25 @@ const stageText: Record<TransactionStage, string> = {
   error: "Transaction not completed",
 };
 
-export function TransactionProgress({ stage, error }: { stage: TransactionStage; error?: string | null }) {
+export function TransactionProgress({
+  stage,
+  error,
+}: {
+  stage: TransactionStage;
+  error?: string | null;
+}) {
   if (stage === "idle") return null;
 
   return (
     <Alert
       variant={stage === "error" ? "destructive" : "default"}
-      className="rounded-[2px] border-border bg-muted/50"
+      className="rounded-lg border-border/60 bg-muted/50"
       role={stage === "error" ? "alert" : "status"}
       aria-live="polite"
     >
-      {stage !== "error" && stage !== "confirmed" ? <LoaderCircle className="animate-spin" /> : null}
+      {stage !== "error" && stage !== "confirmed" ? (
+        <LoaderCircle className="animate-spin" />
+      ) : null}
       <AlertTitle>{stageText[stage]}</AlertTitle>
       {error ? <AlertDescription>{error}</AlertDescription> : null}
     </Alert>

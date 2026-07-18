@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ExplorerLink } from "@/components/shipstamp/ExplorerLink";
-import { normalizeCommitSha, parseGitHubRepositoryUrl } from "@/lib/artifact/normalization";
+import {
+  normalizeCommitSha,
+  parseGitHubRepositoryUrl,
+} from "@/lib/artifact/normalization";
 import type { BuildStampRecord } from "@/lib/contract/types";
 import { formatTimestamp, safeHttpsUrl, shortenHex } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
@@ -15,24 +18,38 @@ export function BuildTimeline({ entries }: { entries: TimelineEntry[] }) {
   if (entries.length === 0) return <EmptyTimeline />;
 
   return (
-    <ol className="border-t border-border">
+    <ol className="space-y-3">
       {entries.map(({ stamp, transactionHash }, index) => (
-        <li key={stamp.id.toString()} className="grid gap-4 border-b border-border py-7 sm:grid-cols-[4rem_1fr_auto]">
-          <p className="font-heading text-4xl text-primary">{String(index + 1).padStart(2, "0")}</p>
+        <li
+          key={stamp.id.toString()}
+          className="grid gap-4 rounded-xl bg-background/35 p-6 sm:grid-cols-[4rem_1fr_auto]"
+        >
+          <p className="font-heading text-4xl text-primary">
+            {String(index + 1).padStart(2, "0")}
+          </p>
           <div>
-            <p className="technical-label">{formatTimestamp(stamp.timestamp)} UTC</p>
-            <h3 className="mt-2 font-heading text-3xl leading-tight">{stamp.milestone}</h3>
+            <p className="technical-label">
+              {formatTimestamp(stamp.timestamp)} UTC
+            </p>
+            <h3 className="mt-2 font-heading text-3xl leading-tight">
+              {stamp.milestone}
+            </h3>
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[0.65rem] text-muted-foreground">
               <span>commit {shortenHex(stamp.commitSha, 9, 0)}</span>
               <span>wallet {shortenHex(stamp.builder)}</span>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
               <Button asChild variant="link">
-                <Link href={`/stamp/${stamp.id}`}>Receipt {stamp.id.toString()}</Link>
+                <Link href={`/stamp/${stamp.id}`}>
+                  Receipt {stamp.id.toString()}
+                </Link>
               </Button>
               {getGitHubCommitUrl(stamp.repository, stamp.commitSha) ? (
                 <a
-                  href={getGitHubCommitUrl(stamp.repository, stamp.commitSha) ?? undefined}
+                  href={
+                    getGitHubCommitUrl(stamp.repository, stamp.commitSha) ??
+                    undefined
+                  }
                   target="_blank"
                   rel="noreferrer"
                   className="font-mono text-[0.68rem] uppercase underline decoration-border underline-offset-4 hover:decoration-foreground"
@@ -50,10 +67,15 @@ export function BuildTimeline({ entries }: { entries: TimelineEntry[] }) {
                   Deployment ↗
                 </a>
               ) : null}
-              {transactionHash ? <ExplorerLink transactionHash={transactionHash} /> : null}
+              {transactionHash ? (
+                <ExplorerLink transactionHash={transactionHash} />
+              ) : null}
             </div>
           </div>
-          <Badge variant="outline" className="h-fit rounded-[2px] font-mono text-[0.58rem] tracking-[0.08em] uppercase sm:justify-self-end">
+          <Badge
+            variant="outline"
+            className="h-fit rounded-[2px] font-mono text-[0.58rem] tracking-[0.08em] uppercase sm:justify-self-end"
+          >
             Stamp #{stamp.id.toString()}
           </Badge>
         </li>
@@ -74,10 +96,13 @@ function getGitHubCommitUrl(repository: string, commitSha: string) {
 
 export function EmptyTimeline() {
   return (
-    <div className="registry-frame border border-dashed border-border bg-background/30 p-8">
-      <p className="technical-label text-primary">Registry response / 0 entries</p>
+    <div className="rounded-xl bg-background/35 p-8">
+      <p className="technical-label text-primary">
+        Registry response / 0 entries
+      </p>
       <p className="mt-3 max-w-lg text-sm leading-6 text-muted-foreground">
-        This project has no onchain ShipStamp milestones yet. No sample activity is substituted.
+        This project has no onchain ShipStamp milestones yet. No sample activity
+        is substituted.
       </p>
     </div>
   );

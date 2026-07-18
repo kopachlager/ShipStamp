@@ -35,7 +35,9 @@ describe("POST /api/github/verify", () => {
       );
     vi.stubGlobal("fetch", fetchMock);
 
-    const response = await POST(createRequest({ repositoryUrl, commitSha }, "success"));
+    const response = await POST(
+      createRequest({ repositoryUrl, commitSha }, "success"),
+    );
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toMatchObject({
       repositoryFullName: "kopachlager/ShipStamp",
@@ -52,7 +54,10 @@ describe("POST /api/github/verify", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const response = await POST(
-      createRequest({ repositoryUrl: "https://gitlab.com/owner/repo", commitSha }, "invalid-repo"),
+      createRequest(
+        { repositoryUrl: "https://gitlab.com/owner/repo", commitSha },
+        "invalid-repo",
+      ),
     );
     expect(response.status).toBe(400);
     await expect(response.json()).resolves.toMatchObject({
@@ -67,38 +72,56 @@ describe("POST /api/github/verify", () => {
       vi
         .fn()
         .mockResolvedValueOnce(
-          Response.json({ full_name: "kopachlager/ShipStamp", html_url: repositoryUrl, private: false }),
+          Response.json({
+            full_name: "kopachlager/ShipStamp",
+            html_url: repositoryUrl,
+            private: false,
+          }),
         )
-        .mockResolvedValueOnce(Response.json({ message: "Not Found" }, { status: 404 })),
+        .mockResolvedValueOnce(
+          Response.json({ message: "Not Found" }, { status: 404 }),
+        ),
     );
 
-    const response = await POST(createRequest({ repositoryUrl, commitSha }, "missing-commit"));
+    const response = await POST(
+      createRequest({ repositoryUrl, commitSha }, "missing-commit"),
+    );
     expect(response.status).toBe(404);
-    await expect(response.json()).resolves.toMatchObject({ error: { code: "COMMIT_NOT_FOUND" } });
+    await expect(response.json()).resolves.toMatchObject({
+      error: { code: "COMMIT_NOT_FOUND" },
+    });
   });
 
   it("reports GitHub API rate limiting clearly", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValue(
-        Response.json(
-          { message: "rate limit" },
-          { status: 403, headers: { "x-ratelimit-remaining": "0" } },
+      vi
+        .fn()
+        .mockResolvedValue(
+          Response.json(
+            { message: "rate limit" },
+            { status: 403, headers: { "x-ratelimit-remaining": "0" } },
+          ),
         ),
-      ),
     );
 
-    const response = await POST(createRequest({ repositoryUrl, commitSha }, "github-rate-limit"));
+    const response = await POST(
+      createRequest({ repositoryUrl, commitSha }, "github-rate-limit"),
+    );
     expect(response.status).toBe(429);
-    await expect(response.json()).resolves.toMatchObject({ error: { code: "GITHUB_RATE_LIMIT" } });
+    await expect(response.json()).resolves.toMatchObject({
+      error: { code: "GITHUB_RATE_LIMIT" },
+    });
   });
 });
 
 function createRequest(body: unknown, clientId: string) {
   return new Request("http://localhost/api/github/verify", {
     method: "POST",
-    headers: { "content-type": "application/json", "x-forwarded-for": `test-${clientId}` },
+    headers: {
+      "content-type": "application/json",
+      "x-forwarded-for": `test-${clientId}`,
+    },
     body: JSON.stringify(body),
   });
 }
-

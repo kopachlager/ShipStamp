@@ -20,11 +20,17 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { getExplorerTransactionUrl, monadTestnet } from "@/lib/chain/monad-testnet";
+import {
+  getExplorerTransactionUrl,
+  monadTestnet,
+} from "@/lib/chain/monad-testnet";
 import { shipStampRegistryAbi } from "@/lib/contract/abi";
 import { SHIPSTAMP_CONTRACT_ADDRESS } from "@/lib/contract/config";
 import type { BuildStampRecord } from "@/lib/contract/types";
-import type { GitHubVerificationError, VerifiedGitHubCommit } from "@/lib/github/types";
+import type {
+  GitHubVerificationError,
+  VerifiedGitHubCommit,
+} from "@/lib/github/types";
 import {
   prepareBuildClaim,
   type BuildClaimInput,
@@ -50,8 +56,12 @@ export function BuildStampForm() {
   const [confirmed, setConfirmed] = useState(false);
   const [stage, setStage] = useState<TransactionStage>("idle");
   const [error, setError] = useState<string | null>(null);
-  const [transactionHash, setTransactionHash] = useState<`0x${string}` | null>(null);
-  const [createdStamp, setCreatedStamp] = useState<BuildStampRecord | null>(null);
+  const [transactionHash, setTransactionHash] = useState<`0x${string}` | null>(
+    null,
+  );
+  const [createdStamp, setCreatedStamp] = useState<BuildStampRecord | null>(
+    null,
+  );
 
   const { address, chainId, isConnected } = useAccount();
   const publicClient = usePublicClient({ chainId: monadTestnet.id });
@@ -78,7 +88,11 @@ export function BuildStampForm() {
     try {
       claim = prepareBuildClaim(input);
     } catch (validationError) {
-      setError(validationError instanceof Error ? validationError.message : "Check the submitted build fields.");
+      setError(
+        validationError instanceof Error
+          ? validationError.message
+          : "Check the submitted build fields.",
+      );
       return;
     }
 
@@ -92,12 +106,17 @@ export function BuildStampForm() {
           commitSha: claim.commitSha,
         }),
       });
-      const body = (await response.json()) as VerifiedGitHubCommit | GitHubVerificationError;
+      const body = (await response.json()) as
+        VerifiedGitHubCommit | GitHubVerificationError;
       if (!response.ok || "error" in body) {
-        throw new Error("error" in body ? body.error.message : "GitHub validation failed.");
+        throw new Error(
+          "error" in body ? body.error.message : "GitHub validation failed.",
+        );
       }
       if (body.commitSha !== claim.commitSha) {
-        throw new Error("GitHub returned a different commit than the canonical submission.");
+        throw new Error(
+          "GitHub returned a different commit than the canonical submission.",
+        );
       }
       setVerification({ claim, github: body });
     } catch (verificationError) {
@@ -155,7 +174,9 @@ export function BuildStampForm() {
       });
       if (duplicate) {
         setStage("error");
-        setError("This wallet has already stamped the same repository, commit, and deployment URL.");
+        setError(
+          "This wallet has already stamped the same repository, commit, and deployment URL.",
+        );
         return;
       }
 
@@ -179,8 +200,12 @@ export function BuildStampForm() {
       setTransactionHash(hash);
       setStage("pending");
 
-      const receipt = await publicClient.waitForTransactionReceipt({ hash, confirmations: 1 });
-      if (receipt.status !== "success") throw new Error("The Monad transaction reverted.");
+      const receipt = await publicClient.waitForTransactionReceipt({
+        hash,
+        confirmations: 1,
+      });
+      if (receipt.status !== "success")
+        throw new Error("The Monad transaction reverted.");
 
       setStage("reading-receipt");
       const events = parseEventLogs({
@@ -190,7 +215,10 @@ export function BuildStampForm() {
         strict: true,
       });
       const stampId = events[0]?.args.stampId;
-      if (stampId === undefined) throw new Error("The confirmed transaction did not emit a build stamp ID.");
+      if (stampId === undefined)
+        throw new Error(
+          "The confirmed transaction did not emit a build stamp ID.",
+        );
 
       const stamp = await publicClient.readContract({
         address: SHIPSTAMP_CONTRACT_ADDRESS,
@@ -207,11 +235,17 @@ export function BuildStampForm() {
   };
 
   return (
-    <section className="registry-frame border border-border bg-card shadow-[0_24px_80px_rgb(0_0_0/0.28)]" aria-labelledby="stamp-form-heading">
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-5 py-4 sm:px-7">
+    <section
+      className="overflow-hidden rounded-xl bg-card shadow-[0_24px_80px_rgb(0_0_0/0.22)]"
+      aria-labelledby="stamp-form-heading"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-5 sm:px-7">
         <div>
           <p className="technical-label text-primary">Entry terminal / 01</p>
-          <h2 id="stamp-form-heading" className="mt-1 font-heading text-3xl leading-none">
+          <h2
+            id="stamp-form-heading"
+            className="mt-1 font-heading text-3xl leading-none"
+          >
             Issue a build record
           </h2>
         </div>
@@ -220,7 +254,7 @@ export function BuildStampForm() {
         </div>
       </div>
 
-      <div className="border-b border-border bg-background/40 px-5 py-5 sm:px-7">
+      <div className="bg-background/30 px-5 py-5 sm:px-7">
         <WalletControl />
       </div>
 
@@ -259,23 +293,21 @@ export function BuildStampForm() {
               rows={3}
               maxLength={280}
               placeholder="What genuinely shipped in this build?"
-              className="min-h-24 resize-y rounded-[2px] border-input bg-background/60 font-sans text-sm placeholder:text-muted-foreground/60 focus-visible:border-primary focus-visible:ring-primary/20"
+              className="min-h-24 resize-y rounded-md border-input bg-background/60 font-sans text-sm placeholder:text-muted-foreground/60 focus-visible:border-primary focus-visible:ring-primary/20"
             />
           </Field>
         </div>
 
         {error && stage !== "error" ? (
-          <Alert variant="destructive" className="mt-6 rounded-[2px] border-destructive/40 bg-destructive/5">
+          <Alert
+            variant="destructive"
+            className="mt-6 rounded-lg border-destructive/30 bg-destructive/5"
+          >
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         ) : null}
 
-        <Button
-          type="submit"
-          disabled={isVerifying}
-          className="mt-7"
-          size="lg"
-        >
+        <Button type="submit" disabled={isVerifying} className="mt-7" size="lg">
           <SearchCheck data-icon="inline-start" />
           {isVerifying ? "Verifying with GitHub…" : "Verify build"}
         </Button>
@@ -286,42 +318,54 @@ export function BuildStampForm() {
             <CommitPreview commit={verification.github} />
             <ArtifactPreview claim={verification.claim} wallet={address} />
 
-            <Field orientation="horizontal" className="items-start border-t border-border pt-6">
+            <Field
+              orientation="horizontal"
+              className="items-start border-t border-border pt-6"
+            >
               <Checkbox
                 id="claim-confirmation"
                 checked={confirmed}
                 onCheckedChange={(value) => setConfirmed(value === true)}
                 className="mt-1 rounded-[1px]"
               />
-              <FieldLabel htmlFor="claim-confirmation" className="max-w-xl text-sm leading-6 font-normal text-muted-foreground">
-                I understand this records a wallet-signed build claim on Monad. It does not prove
-                repository ownership or that the deployment serves this commit.
+              <FieldLabel
+                htmlFor="claim-confirmation"
+                className="max-w-xl text-sm leading-6 font-normal text-muted-foreground"
+              >
+                I understand this records a wallet-signed build claim on Monad.
+                It does not prove repository ownership or that the deployment
+                serves this commit.
               </FieldLabel>
             </Field>
 
             <Button
               type="button"
               onClick={stampBuild}
-              disabled={!confirmed || stage === "awaiting-approval" || stage === "pending" || stage === "reading-receipt"}
+              disabled={
+                !confirmed ||
+                stage === "awaiting-approval" ||
+                stage === "pending" ||
+                stage === "reading-receipt"
+              }
               size="lg"
             >
               <Stamp data-icon="inline-start" />
               Stamp this build
             </Button>
 
-            <TransactionProgress stage={stage} error={stage === "error" ? error : null} />
+            <TransactionProgress
+              stage={stage}
+              error={stage === "error" ? error : null}
+            />
             {transactionHash && stage !== "confirmed" ? (
-              <Button
-                asChild
-                variant="link"
-              >
-              <a
-                href={getExplorerTransactionUrl(transactionHash)}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Inspect pending transaction ↗
-              </a>
+              <Button asChild variant="link">
+                <a
+                  href={getExplorerTransactionUrl(transactionHash)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Inspect pending transaction ↗
+                </a>
               </Button>
             ) : null}
           </div>
@@ -329,7 +373,7 @@ export function BuildStampForm() {
       </form>
 
       {createdStamp ? (
-        <div className="border-t border-border bg-background/30 p-5 sm:p-7">
+        <div className="bg-background/30 p-5 sm:p-7">
           <BuildReceipt
             stamp={createdStamp}
             transactionHash={transactionHash}
@@ -368,19 +412,25 @@ function FormField({
         placeholder={placeholder}
         autoComplete="off"
         spellCheck={false}
-        className={`h-11 rounded-[2px] border-input bg-background/60 px-3 text-sm placeholder:text-muted-foreground/60 focus-visible:border-primary focus-visible:ring-primary/20 ${mono ? "font-mono text-xs" : ""}`}
+        className={`h-11 rounded-md border-input bg-background/60 px-3 text-sm placeholder:text-muted-foreground/60 focus-visible:border-primary focus-visible:ring-primary/20 ${mono ? "font-mono text-xs" : ""}`}
       />
     </Field>
   );
 }
 
 function getTransactionError(error: unknown) {
-  const message = error instanceof Error ? error.message : "The transaction was not completed.";
-  if (/reject|denied|cancel/i.test(message)) return "The wallet transaction was rejected.";
+  const message =
+    error instanceof Error
+      ? error.message
+      : "The transaction was not completed.";
+  if (/reject|denied|cancel/i.test(message))
+    return "The wallet transaction was rejected.";
   if (/DuplicateStamp|already stamped/i.test(message)) {
     return "This wallet has already stamped the exact repository, commit, and deployment.";
   }
-  if (/insufficient funds/i.test(message)) return "The wallet does not have enough test MON for gas.";
-  if (/revert/i.test(message)) return "The transaction reverted. No build receipt was created.";
+  if (/insufficient funds/i.test(message))
+    return "The wallet does not have enough test MON for gas.";
+  if (/revert/i.test(message))
+    return "The transaction reverted. No build receipt was created.";
   return message.split("\n")[0];
 }

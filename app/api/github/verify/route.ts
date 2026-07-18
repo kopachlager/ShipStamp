@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
-import { normalizeCommitSha, parseGitHubRepositoryUrl } from "@/lib/artifact/normalization";
-import { GitHubClientError, verifyPublicGitHubCommit } from "@/lib/github/client";
+import {
+  normalizeCommitSha,
+  parseGitHubRepositoryUrl,
+} from "@/lib/artifact/normalization";
+import {
+  GitHubClientError,
+  verifyPublicGitHubCommit,
+} from "@/lib/github/client";
 import { checkGitHubVerificationRateLimit } from "@/lib/github/rate-limit";
 import type { GitHubVerificationErrorCode } from "@/lib/github/types";
 import { InputValidationError } from "@/lib/validation/errors";
@@ -21,28 +27,47 @@ export async function POST(request: Request) {
 
   const contentLength = Number(request.headers.get("content-length") ?? 0);
   if (contentLength > MAX_REQUEST_BYTES) {
-    return errorResponse("INVALID_REQUEST", "The verification request is too large.", 413);
+    return errorResponse(
+      "INVALID_REQUEST",
+      "The verification request is too large.",
+      413,
+    );
   }
 
   let body: unknown;
   try {
     const text = await request.text();
     if (new TextEncoder().encode(text).length > MAX_REQUEST_BYTES) {
-      return errorResponse("INVALID_REQUEST", "The verification request is too large.", 413);
+      return errorResponse(
+        "INVALID_REQUEST",
+        "The verification request is too large.",
+        413,
+      );
     }
     body = JSON.parse(text);
   } catch {
-    return errorResponse("INVALID_REQUEST", "Send a valid JSON verification request.", 400);
+    return errorResponse(
+      "INVALID_REQUEST",
+      "Send a valid JSON verification request.",
+      400,
+    );
   }
 
   if (!isVerificationRequest(body)) {
-    return errorResponse("INVALID_REQUEST", "Repository URL and commit SHA are required.", 400);
+    return errorResponse(
+      "INVALID_REQUEST",
+      "Repository URL and commit SHA are required.",
+      400,
+    );
   }
 
   try {
     const repository = parseGitHubRepositoryUrl(body.repositoryUrl);
     const commitSha = normalizeCommitSha(body.commitSha);
-    const verifiedCommit = await verifyPublicGitHubCommit(repository, commitSha);
+    const verifiedCommit = await verifyPublicGitHubCommit(
+      repository,
+      commitSha,
+    );
     return NextResponse.json(verifiedCommit, {
       status: 200,
       headers: { "Cache-Control": "no-store" },
@@ -61,21 +86,36 @@ export async function POST(request: Request) {
             : 404;
       return errorResponse(error.code, error.message, status);
     }
-    return errorResponse("GITHUB_UNAVAILABLE", "GitHub validation failed safely. Try again shortly.", 503);
+    return errorResponse(
+      "GITHUB_UNAVAILABLE",
+      "GitHub validation failed safely. Try again shortly.",
+      503,
+    );
   }
 }
 
-function isVerificationRequest(value: unknown): value is { repositoryUrl: string; commitSha: string } {
+function isVerificationRequest(
+  value: unknown,
+): value is { repositoryUrl: string; commitSha: string } {
   if (!value || typeof value !== "object") return false;
   const candidate = value as Record<string, unknown>;
-  return typeof candidate.repositoryUrl === "string" && typeof candidate.commitSha === "string";
+  return (
+    typeof candidate.repositoryUrl === "string" &&
+    typeof candidate.commitSha === "string"
+  );
 }
 
 function getClientId(headers: Headers): string {
-  return headers.get("x-forwarded-for")?.split(",")[0]?.trim() || headers.get("x-real-ip") || "local";
+  return (
+    headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    headers.get("x-real-ip") ||
+    "local"
+  );
 }
 
-function mapValidationCode(code: InputValidationError["code"]): GitHubVerificationErrorCode {
+function mapValidationCode(
+  code: InputValidationError["code"],
+): GitHubVerificationErrorCode {
   if (code === "UNSUPPORTED_GIT_PROVIDER") return "UNSUPPORTED_GIT_PROVIDER";
   if (code === "INVALID_COMMIT_SHA") return "INVALID_COMMIT_SHA";
   return "INVALID_GITHUB_URL";
@@ -92,4 +132,3 @@ function errorResponse(
     { status, headers: { "Cache-Control": "no-store", ...headers } },
   );
 }
-

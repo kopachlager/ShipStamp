@@ -17,13 +17,17 @@ export function WalletControl() {
     setError(null);
     const connector = connectors[0];
     if (!connector) {
-      setError("No injected EVM wallet was detected. Install a compatible browser wallet.");
+      setError(
+        "No injected EVM wallet was detected. Install a compatible browser wallet.",
+      );
       return;
     }
     try {
       await connectAsync({ connector, chainId: monadTestnet.id });
     } catch (connectionError) {
-      setError(getWalletError(connectionError, "Wallet connection was not completed."));
+      setError(
+        getWalletError(connectionError, "Wallet connection was not completed."),
+      );
     }
   };
 
@@ -32,7 +36,9 @@ export function WalletControl() {
     try {
       await switchChainAsync({ chainId: monadTestnet.id });
     } catch (switchError) {
-      setError(getWalletError(switchError, "Network switching was not completed."));
+      setError(
+        getWalletError(switchError, "Network switching was not completed."),
+      );
     }
   };
 
@@ -60,7 +66,9 @@ export function WalletControl() {
     <div className="flex flex-wrap items-start gap-3">
       <div className="min-w-44">
         <p className="technical-label">Connected builder</p>
-        <p className="technical-value mt-1 text-xs">{shortenAddress(address)}</p>
+        <p className="technical-value mt-1 text-xs">
+          {shortenAddress(address)}
+        </p>
       </div>
       {chainId !== monadTestnet.id ? (
         <Button
@@ -90,12 +98,16 @@ export function WalletControl() {
 }
 
 function shortenAddress(address?: string) {
-  return address ? `${address.slice(0, 6)}…${address.slice(-4)}` : "Unavailable";
+  return address
+    ? `${address.slice(0, 6)}…${address.slice(-4)}`
+    : "Unavailable";
 }
 
 function getWalletError(error: unknown, fallback: string) {
   if (error instanceof Error) {
-    if (/provider not found|connector not found|no provider/i.test(error.message)) {
+    if (
+      /provider not found|connector not found|no provider/i.test(error.message)
+    ) {
       return "No injected EVM wallet was detected. Install a compatible browser wallet.";
     }
     if (/reject|denied|cancel/i.test(error.message)) return fallback;

@@ -26,7 +26,7 @@ export default function RootLayout({
       <body>
         <Web3Provider>
           <TooltipProvider>
-            <header className="border-b border-border bg-background/95 backdrop-blur-sm">
+            <header className="bg-background/95 backdrop-blur-sm">
               <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
                 <div className="flex items-center gap-5">
                   <Link
@@ -65,7 +65,6 @@ export default function RootLayout({
                   </a>
                 </nav>
               </div>
-              <div className="noise-band h-px opacity-80" aria-hidden="true" />
             </header>
             {children}
             <Footer10

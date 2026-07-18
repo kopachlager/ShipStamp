@@ -24,9 +24,9 @@ export function Feature28({
   className,
 }: Feature28Props) {
   return (
-    <section className={cn("border-y border-border bg-[#0d0f11]", className)}>
+    <section className={cn("bg-card/20", className)}>
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
-        <div className="grid gap-7 border-b border-border pb-9 lg:grid-cols-[0.72fr_1.28fr]">
+        <div className="grid gap-7 pb-9 lg:grid-cols-[0.72fr_1.28fr]">
           <div>
             {label && <p className="technical-label text-primary">{label}</p>}
             <h2 className="display-title mt-3 max-w-xl text-5xl leading-[0.9] sm:text-6xl">
@@ -41,16 +41,12 @@ export function Feature28({
         </div>
 
         <ol className="relative grid md:grid-cols-3">
-          <div
-            className="absolute top-8 right-[16.66%] left-[16.66%] hidden h-px bg-border md:block"
-            aria-hidden="true"
-          />
           {steps.map((step, index) => (
             <li
               key={step.id}
-              className="relative grid grid-cols-[3.5rem_1fr] gap-4 border-b border-border py-7 last:border-b-0 md:block md:border-r md:border-b-0 md:px-7 md:py-10 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+              className="relative grid grid-cols-[3.5rem_1fr] gap-4 py-7 md:block md:px-7 md:py-10 md:first:pl-0 md:last:pr-0"
             >
-              <div className="relative z-10 flex size-12 items-center justify-center border border-primary bg-background font-mono text-xs text-primary md:mx-auto">
+              <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-primary/10 font-mono text-xs text-primary md:mx-auto">
                 {String(index + 1).padStart(2, "0")}
               </div>
               <div className="md:mt-8 md:text-center">

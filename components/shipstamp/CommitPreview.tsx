@@ -4,13 +4,22 @@ import { Button } from "@/components/ui/button";
 
 export function CommitPreview({ commit }: { commit: VerifiedGitHubCommit }) {
   return (
-    <section className="border border-border bg-background/40 p-5" aria-labelledby="verified-commit-heading">
+    <section
+      className="border border-border bg-background/40 p-5"
+      aria-labelledby="verified-commit-heading"
+    >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <Badge variant="outline" className="rounded-[2px] border-[var(--success)]/40 bg-[var(--success)]/5 font-mono text-[0.62rem] tracking-[0.1em] text-[var(--success)] uppercase">
+          <Badge
+            variant="outline"
+            className="rounded-full border-[var(--success)]/30 bg-[var(--success)]/5 font-mono text-[0.62rem] tracking-[0.1em] text-[var(--success)] uppercase"
+          >
             GitHub response / verified
           </Badge>
-          <h3 id="verified-commit-heading" className="mt-3 font-heading text-2xl">
+          <h3
+            id="verified-commit-heading"
+            className="mt-3 font-heading text-2xl"
+          >
             Public commit located
           </h3>
         </div>
@@ -27,24 +36,43 @@ export function CommitPreview({ commit }: { commit: VerifiedGitHubCommit }) {
           label="Author metadata"
           value={`${commit.commitAuthorName}${commit.commitAuthorUsername ? ` (@${commit.commitAuthorUsername})` : ""}`}
         />
-        <PreviewField label="Commit timestamp" value={new Date(commit.commitDate).toUTCString()} />
+        <PreviewField
+          label="Commit timestamp"
+          value={new Date(commit.commitDate).toUTCString()}
+        />
         <div className="sm:col-span-2">
-          <PreviewField label="Commit message" value={commit.commitMessage} mono={false} />
+          <PreviewField
+            label="Commit message"
+            value={commit.commitMessage}
+            mono={false}
+          />
         </div>
       </dl>
       <p className="mt-5 border-t border-border pt-4 font-mono text-[0.65rem] leading-5 text-muted-foreground">
-        GitHub author metadata is display information. It does not connect that identity to the
-        wallet creating this claim.
+        GitHub author metadata is display information. It does not connect that
+        identity to the wallet creating this claim.
       </p>
     </section>
   );
 }
 
-function PreviewField({ label, value, mono = true }: { label: string; value: string; mono?: boolean }) {
+function PreviewField({
+  label,
+  value,
+  mono = true,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+}) {
   return (
     <div>
       <dt className="technical-label">{label}</dt>
-      <dd className={`mt-1 break-words text-sm leading-6 ${mono ? "technical-value" : ""}`}>{value}</dd>
+      <dd
+        className={`mt-1 break-words text-sm leading-6 ${mono ? "technical-value" : ""}`}
+      >
+        {value}
+      </dd>
     </div>
   );
 }

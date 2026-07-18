@@ -11,11 +11,11 @@ const ASCII_RAMP = " .,:;i1tfLCG08@";
 export function AsciiStamp() {
   return (
     <figure
-      className="relative h-[17rem] overflow-hidden border border-border bg-[#060708] sm:h-[19rem]"
+      className="relative h-[17rem] overflow-hidden rounded-xl bg-[#0b0a09] sm:h-[19rem]"
       role="img"
       aria-label="Interactive ASCII rendering of a rotating rubber stamp"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-border/70 px-3 py-2 font-mono text-[0.56rem] tracking-[0.1em] text-muted-foreground uppercase">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-3 font-mono text-[0.56rem] tracking-[0.1em] text-muted-foreground uppercase">
         <span>Object / proof stamp</span>
         <span>Drag to inspect</span>
       </div>
@@ -43,8 +43,8 @@ export function AsciiStamp() {
           <AsciiPass />
         </Canvas>
       </div>
-      <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-center gap-3 border-t border-border/70 bg-background/70 px-3 py-2 font-mono text-[0.56rem] tracking-[0.08em] text-muted-foreground uppercase backdrop-blur-sm">
-        <span className="size-1.5 bg-primary" aria-hidden="true" />
+      <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-center gap-3 bg-[#0b0a09]/75 px-4 py-3 font-mono text-[0.56rem] tracking-[0.08em] text-muted-foreground uppercase backdrop-blur-sm">
+        <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
         Live mesh converted to characters
       </figcaption>
     </figure>
@@ -82,7 +82,7 @@ function StampObject() {
       </mesh>
       <mesh position={[0, -0.15, 0]}>
         <boxGeometry args={[1.62, 0.36, 1.08]} />
-        <meshStandardMaterial color="#ff5b38" roughness={0.65} />
+        <meshStandardMaterial color="#e76f51" roughness={0.65} />
       </mesh>
       <mesh position={[0, -0.38, 0]}>
         <boxGeometry args={[1.84, 0.16, 1.28]} />
@@ -105,7 +105,7 @@ function AsciiPass() {
 
     element.style.position = "absolute";
     element.style.inset = "0";
-    element.style.color = "#ddd9cf";
+    element.style.color = "#d9d1c6";
     element.style.backgroundColor = "#060708";
     element.style.pointerEvents = "none";
     element.style.fontFamily = '"IBM Plex Mono", monospace';

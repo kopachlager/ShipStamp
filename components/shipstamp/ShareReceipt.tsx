@@ -5,7 +5,9 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 export function ShareReceipt({ path, text }: { path: string; text: string }) {
-  const [status, setStatus] = useState<"idle" | "copied" | "shared" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "copied" | "shared" | "error">(
+    "idle",
+  );
 
   const getUrl = () => new URL(path, window.location.origin).toString();
 
@@ -25,7 +27,11 @@ export function ShareReceipt({ path, text }: { path: string; text: string }) {
       return;
     }
     try {
-      await navigator.share({ title: "ShipStamp build receipt", text, url: getUrl() });
+      await navigator.share({
+        title: "ShipStamp build receipt",
+        text,
+        url: getUrl(),
+      });
       setStatus("shared");
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
@@ -41,7 +47,11 @@ export function ShareReceipt({ path, text }: { path: string; text: string }) {
       <Button type="button" onClick={share} variant="link">
         {status === "shared" ? "Shared" : "Share receipt"}
       </Button>
-      {status === "error" ? <span className="text-[var(--stamp-dark)]">Sharing was unavailable.</span> : null}
+      {status === "error" ? (
+        <span className="text-[var(--stamp-dark)]">
+          Sharing was unavailable.
+        </span>
+      ) : null}
     </div>
   );
 }

@@ -2,7 +2,11 @@
 
 import { useAccount } from "wagmi";
 import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { monadTestnet } from "@/lib/chain/monad-testnet";
 
 export function NetworkIndicator() {
@@ -17,18 +21,27 @@ export function NetworkIndicator() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Badge variant="outline" className="h-7 gap-2 rounded-[2px] border-border bg-background px-2.5 font-mono text-[0.62rem] tracking-[0.1em] uppercase">
+        <Badge
+          variant="outline"
+          className="h-7 gap-2 rounded-full border-border/70 bg-background/70 px-2.5 font-mono text-[0.62rem] tracking-[0.1em] uppercase"
+        >
           <span
             aria-hidden="true"
             className={`h-1.5 w-1.5 rounded-full ${
-              !isConnected ? "bg-muted-foreground" : correctNetwork ? "bg-[var(--success)]" : "bg-primary"
+              !isConnected
+                ? "bg-muted-foreground"
+                : correctNetwork
+                  ? "bg-[var(--success)]"
+                  : "bg-primary"
             }`}
           />
           {label}
         </Badge>
       </TooltipTrigger>
       <TooltipContent side="bottom">
-        {correctNetwork ? "Connected to chain 10143" : "ShipStamp writes only to Monad Testnet"}
+        {correctNetwork
+          ? "Connected to chain 10143"
+          : "ShipStamp writes only to Monad Testnet"}
       </TooltipContent>
     </Tooltip>
   );

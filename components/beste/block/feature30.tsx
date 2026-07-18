@@ -35,10 +35,10 @@ export function Feature30({
   const renderColumn = (column: ComparisonColumn) => (
     <section
       key={column.id}
-      className="border-t border-border"
+      className="rounded-xl bg-card/70 p-6"
       aria-labelledby={`${column.id}-heading`}
     >
-      <div className="flex items-center justify-between border-b border-border py-4">
+      <div className="flex items-center justify-between gap-4 pb-3">
         <h3
           id={`${column.id}-heading`}
           className="font-mono text-xs tracking-[0.1em] uppercase"
@@ -59,7 +59,7 @@ export function Feature30({
         {column.items.map((item) => (
           <li
             key={item.id}
-            className="grid grid-cols-[1.5rem_1fr] gap-3 border-b border-border py-4 text-sm leading-6"
+            className="grid grid-cols-[1.5rem_1fr] gap-3 py-3 text-sm leading-6"
           >
             {column.tone === "positive" ? (
               <Check
