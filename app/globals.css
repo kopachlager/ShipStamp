@@ -6,24 +6,24 @@
 
 :root {
   color-scheme: dark;
-  --background: #0f0e0d;
-  --foreground: #f0ece4;
-  --card: #181614;
-  --card-foreground: #f0ece4;
-  --popover: #1d1a18;
-  --popover-foreground: #f0ece4;
-  --primary: #e76f51;
-  --primary-foreground: #1c100c;
-  --secondary: #25211e;
-  --secondary-foreground: #ece6dd;
-  --muted: #201d1a;
-  --muted-foreground: #a39b90;
-  --accent: #2c2723;
-  --accent-foreground: #f4efe7;
-  --destructive: #df7062;
-  --border: #302c28;
-  --input: #3a342f;
-  --ring: #ea8a70;
+  --background: #050607;
+  --foreground: #f4f7f5;
+  --card: #0d1012;
+  --card-foreground: #f4f7f5;
+  --popover: #111519;
+  --popover-foreground: #f4f7f5;
+  --primary: #c8ff3d;
+  --primary-foreground: #071000;
+  --secondary: #151a1f;
+  --secondary-foreground: #edf2f0;
+  --muted: #14191d;
+  --muted-foreground: #89939c;
+  --accent: #1b2228;
+  --accent-foreground: #f4f7f5;
+  --destructive: #ff5f6d;
+  --border: #242b31;
+  --input: #303941;
+  --ring: #c8ff3d;
   --radius: 0.55rem;
 
   --paper: var(--background);
@@ -31,27 +31,27 @@
   --ink: var(--foreground);
   --rule: var(--border);
   --stamp: var(--primary);
-  --stamp-dark: #ef9b83;
-  --focus: #ef9077;
-  --success: #85b890;
+  --stamp-dark: #ddff87;
+  --focus: #c8ff3d;
+  --success: #49e6a8;
 
-  --chart-1: #e76f51;
-  --chart-2: #c8ab83;
-  --chart-3: #7f9ca0;
-  --chart-4: #a58f9e;
-  --chart-5: #85b890;
-  --sidebar: #181614;
-  --sidebar-foreground: #f0ece4;
-  --sidebar-primary: #e76f51;
-  --sidebar-primary-foreground: #1c100c;
-  --sidebar-accent: #25211e;
-  --sidebar-accent-foreground: #f0ece4;
-  --sidebar-border: #302c28;
-  --sidebar-ring: #ea8a70;
+  --chart-1: #c8ff3d;
+  --chart-2: #5ce1e6;
+  --chart-3: #9b87f5;
+  --chart-4: #49e6a8;
+  --chart-5: #ffcf4a;
+  --sidebar: #0d1012;
+  --sidebar-foreground: #f4f7f5;
+  --sidebar-primary: #c8ff3d;
+  --sidebar-primary-foreground: #071000;
+  --sidebar-accent: #151a1f;
+  --sidebar-accent-foreground: #f4f7f5;
+  --sidebar-border: #242b31;
+  --sidebar-ring: #c8ff3d;
 }
 
 @theme inline {
-  --font-heading: "Newsreader Variable", Georgia, serif;
+  --font-heading: "Space Grotesk Variable", Arial, sans-serif;
   --font-sans: "IBM Plex Sans Variable", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", Consolas, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -147,9 +147,9 @@
 }
 
 .display-title {
-  font-family: "Newsreader Variable", Georgia, serif;
-  font-weight: 520;
-  letter-spacing: -0.045em;
+  font-family: "Space Grotesk Variable", Arial, sans-serif;
+  font-weight: 560;
+  letter-spacing: -0.06em;
 }
 
 .technical-label {

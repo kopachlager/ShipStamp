@@ -11,7 +11,7 @@ const ASCII_RAMP = "@80GCLft1i;:,. ";
 export function AsciiStamp() {
   return (
     <figure
-      className="relative h-[17rem] overflow-hidden rounded-xl bg-[#0b0a09] sm:h-[19rem]"
+      className="relative h-[17rem] overflow-hidden rounded-xl bg-[#020304] sm:h-[19rem]"
       role="img"
       aria-label="Interactive ASCII rendering of a rotating rubber stamp"
     >
@@ -66,19 +66,19 @@ function StampObject() {
     <group ref={group} rotation={[-0.16, -0.55, 0.08]} scale={1.08}>
       <mesh position={[0, 0.72, 0]}>
         <cylinderGeometry args={[0.34, 0.54, 0.86, 28]} />
-        <meshStandardMaterial color="#f1eee6" roughness={0.58} />
+        <meshStandardMaterial color="#f4f7f5" roughness={0.58} />
       </mesh>
       <mesh position={[0, 0.18, 0]}>
         <cylinderGeometry args={[0.22, 0.28, 0.32, 24]} />
-        <meshStandardMaterial color="#f1eee6" roughness={0.58} />
+        <meshStandardMaterial color="#f4f7f5" roughness={0.58} />
       </mesh>
       <mesh position={[0, -0.15, 0]}>
         <boxGeometry args={[1.62, 0.36, 1.08]} />
-        <meshStandardMaterial color="#e76f51" roughness={0.65} />
+        <meshStandardMaterial color="#c8ff3d" roughness={0.65} />
       </mesh>
       <mesh position={[0, -0.38, 0]}>
         <boxGeometry args={[1.84, 0.16, 1.28]} />
-        <meshStandardMaterial color="#f1eee6" roughness={0.72} />
+        <meshStandardMaterial color="#f4f7f5" roughness={0.72} />
       </mesh>
     </group>
   );
@@ -97,7 +97,7 @@ function AsciiPass() {
 
     element.style.position = "absolute";
     element.style.inset = "0";
-    element.style.color = "#d9d1c6";
+    element.style.color = "#b8c4cc";
     element.style.backgroundColor = "#060708";
     element.style.pointerEvents = "none";
     element.style.fontFamily = '"IBM Plex Mono", monospace';

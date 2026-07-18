@@ -15,7 +15,7 @@ interface Footer10Props {
 // Adapted from Beste UI's free Footer10 split footer.
 export function Footer10({ links, className }: Footer10Props) {
   return (
-    <footer className={cn("bg-[#0b0a09]", className)}>
+    <footer className={cn("bg-[#020304]", className)}>
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-10 sm:px-8 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <Link
