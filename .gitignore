@@ -12,5 +12,11 @@ contracts/broadcast/
 # Frontend (P1+)
 node_modules/
 .next/
+next-env.d.ts
 coverage/
-
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.vercel/
