@@ -1,6 +1,5 @@
 import { BuildStampForm } from "@/components/shipstamp/BuildStampForm";
-import { AsciiStamp } from "@/components/shipstamp/AsciiStamp";
-import { GitBranch } from "lucide-react";
+import { ProofFlowGraphic } from "@/components/shipstamp/ProofFlowGraphic";
 import {
   BuildTimeline,
   type TimelineEntry,
@@ -35,9 +34,12 @@ export default async function HomePage() {
 
   return (
     <main>
-      <section className="min-h-[calc(100svh-3.5rem)]">
+      <section className="shipstamp-grid relative min-h-[calc(100svh-3.5rem)] overflow-hidden">
         <div className="mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-7xl items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:py-16">
           <div className="relative z-10">
+            <p className="mb-6 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-primary">
+              Git commit → live manifest → Monad
+            </p>
             <h1 className="display-title max-w-2xl text-6xl leading-[0.9] sm:text-7xl lg:text-[5.6rem]">
               Every build leaves a{" "}
               <span className="text-primary">receipt.</span>
@@ -50,20 +52,19 @@ export default async function HomePage() {
               href="#create-receipt"
               className="mt-9 inline-flex items-center gap-3 font-mono text-xs tracking-[0.1em] text-foreground uppercase no-underline transition-colors hover:text-primary"
             >
-              <GitBranch className="size-4 text-primary" aria-hidden="true" />
+              <span className="text-primary" aria-hidden="true">→</span>
               Start with a public commit <span className="text-primary">↓</span>
             </a>
           </div>
-          <AsciiStamp />
+          <ProofFlowGraphic />
         </div>
       </section>
 
-      <section id="create-receipt" className="bg-[#090b0d] scroll-mt-14">
+      <section id="create-receipt" className="proof-section relative scroll-mt-14 bg-[#090b0d]">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.38fr_1fr] lg:gap-16">
           <div>
-            <p className="flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-primary uppercase">
-              <GitBranch className="size-4" aria-hidden="true" />
-              GitHub → Monad
+            <p className="font-mono text-xs tracking-[0.14em] text-primary uppercase">
+              [ GitHub → deployment → Monad ]
             </p>
             <h2 className="display-title mt-4 max-w-sm text-5xl leading-[0.95] sm:text-6xl">
               Prove the connection.
@@ -78,11 +79,22 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-background">
+      <section className="shipstamp-grid bg-background">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
-          <h2 className="display-title mb-10 text-4xl sm:text-5xl">
-            ShipStamp build log
-          </h2>
+          <div className="mb-10 grid gap-5 border-b border-border pb-7 sm:grid-cols-[1fr_auto] sm:items-end">
+            <div>
+              <p className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-primary">
+                Contract chronology
+              </p>
+              <h2 className="display-title mt-3 text-4xl sm:text-5xl">
+                ShipStamp build log
+              </h2>
+            </div>
+            <div className="receipt-impression max-w-48 rotate-[-1deg] px-4 py-3 text-center text-primary">
+              <p className="font-heading text-lg uppercase leading-none">Live receipts</p>
+              <p className="mt-1 font-mono text-[0.48rem] uppercase tracking-[0.08em]">Read from Monad</p>
+            </div>
+          </div>
           {timelineMessage ? (
             <div className="rounded-xl bg-card px-6 py-8" role="status">
               <p className="font-mono text-xs text-muted-foreground">
