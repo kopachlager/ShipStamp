@@ -14,12 +14,12 @@ describe("ShipStamp public self-manifest", () => {
     const manifest = normalizeManifest(JSON.parse(raw));
     expect(manifest).toMatchObject({
       repository: "kopachlager/shipstamp",
-      commit: "8aaf229ee448221d9142b3525e33f0cad7c19b55",
+      commit: "1b4903058e3c75ebc574994a1df66e35ed43090b",
       deploymentUrl: "https://ship-stamp.vercel.app",
       wallet: "0x5cd82f40b71f5a4ea7343ce7aa10987d5f197177",
     });
     expect(getManifestHash(manifest)).toBe(
-      "0x16a7948e8cdf53cdea7231887d142305fa77b7c9895dd9519aac95d64285751f",
+      "0x08f726579b5045bed1aa9072aad1bb0b7d579828dcbed1d932412924a770792a",
     );
   });
 });

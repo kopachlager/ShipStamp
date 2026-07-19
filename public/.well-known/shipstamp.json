@@ -2,7 +2,7 @@
   "schemaVersion": "1",
   "project": "ShipStamp",
   "repository": "kopachlager/shipstamp",
-  "commit": "8aaf229ee448221d9142b3525e33f0cad7c19b55",
+  "commit": "1b4903058e3c75ebc574994a1df66e35ed43090b",
   "deploymentUrl": "https://ship-stamp.vercel.app",
   "wallet": "0x5cd82f40b71f5a4ea7343ce7aa10987d5f197177"
 }
