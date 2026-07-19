@@ -1,3 +1,5 @@
+import { TerminalBackdrop } from "@/components/shipstamp/TerminalBackdrop";
+
 const MANIFEST_FIELDS = [
   "Project",
   "Repository",
@@ -10,10 +12,11 @@ const MANIFEST_FIELDS = [
 export function ProofFlowGraphic() {
   return (
     <figure
-      className="relative min-h-[25rem] overflow-hidden px-1 py-5 sm:min-h-[31rem] sm:px-3 sm:py-7"
+      className="proof-terminal relative min-h-[25rem] overflow-hidden px-1 py-5 sm:min-h-[31rem] sm:px-3 sm:py-7"
       role="img"
       aria-label="A public Git commit flows through a deployment manifest into a build receipt recorded on Monad"
     >
+      <TerminalBackdrop />
       <div className="relative z-10 flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted-foreground">
         <span>Proof route / v1</span>
         <span className="text-primary">Monad 10143</span>
