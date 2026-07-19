@@ -166,6 +166,83 @@
   overflow-wrap: anywhere;
 }
 
+.shipstamp-grid {
+  background-image:
+    linear-gradient(rgb(200 255 61 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(200 255 61 / 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 82% 18%, rgb(200 255 61 / 0.055), transparent 27rem);
+  background-size: 4rem 4rem, 4rem 4rem, auto;
+}
+
+.proof-section::before {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent calc(25% - 1px),
+    rgb(200 255 61 / 0.025) calc(25% - 1px),
+    rgb(200 255 61 / 0.025) 25%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.proof-field {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.015);
+}
+
+.proof-field::after {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.018) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+  content: "";
+  pointer-events: none;
+}
+
+.ascii-corner {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  color: rgb(137 147 156 / 0.22);
+  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-size: 0.48rem;
+  line-height: 0.62rem;
+  letter-spacing: 0.08em;
+  user-select: none;
+}
+
+.manifest-sheet {
+  border: 1px solid rgb(244 247 245 / 0.72);
+  clip-path: polygon(0 0, calc(100% - 1.65rem) 0, 100% 1.65rem, 100% 100%, 0 100%);
+}
+
+.manifest-sheet::after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-bottom: 1px solid rgb(244 247 245 / 0.72);
+  border-left: 1px solid rgb(244 247 245 / 0.72);
+  content: "";
+}
+
+.receipt-impression {
+  border: 3px double currentColor;
+  background-image: repeating-linear-gradient(
+    101deg,
+    transparent 0,
+    transparent 5px,
+    rgb(200 255 61 / 0.035) 6px,
+    transparent 7px
+  );
+  box-shadow: inset 0 0 0 2px rgb(200 255 61 / 0.08);
+}
+
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;

@@ -18,11 +18,11 @@ export function BuildTimeline({ entries }: { entries: TimelineEntry[] }) {
   if (entries.length === 0) return <EmptyTimeline />;
 
   return (
-    <ol className="space-y-3">
+    <ol className="border-t border-border">
       {entries.map(({ stamp, transactionHash }, index) => (
         <li
           key={stamp.id.toString()}
-          className="grid gap-4 rounded-xl bg-background/35 p-6 sm:grid-cols-[4rem_1fr_auto]"
+          className="grid gap-4 border-b border-border bg-background/35 p-6 sm:grid-cols-[4rem_1fr_auto]"
         >
           <p className="font-heading text-4xl text-primary">
             {String(index + 1).padStart(2, "0")}
@@ -96,7 +96,7 @@ function getGitHubCommitUrl(repository: string, commitSha: string) {
 
 export function EmptyTimeline() {
   return (
-    <div className="rounded-xl bg-background/35 p-8" role="status">
+    <div className="border border-border bg-background/35 p-8" role="status">
       <p className="text-sm text-muted-foreground">No receipts yet.</p>
     </div>
   );
