@@ -1,5 +1,6 @@
 import { BuildStampForm } from "@/components/shipstamp/BuildStampForm";
 import { ProofFlowGraphic } from "@/components/shipstamp/ProofFlowGraphic";
+import { TerminalBackdrop } from "@/components/shipstamp/TerminalBackdrop";
 import {
   BuildTimeline,
   type TimelineEntry,
@@ -35,6 +36,7 @@ export default async function HomePage() {
   return (
     <main>
       <section className="shipstamp-dots relative min-h-[calc(100svh-3.5rem)] overflow-hidden">
+        <TerminalBackdrop />
         <div className="relative z-10 mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-7xl items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:py-16">
           <div className="relative z-10">
             <p className="mb-6 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-primary">
