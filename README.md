@@ -17,12 +17,15 @@ ShipStamp does not prove that every deployed file was produced from the submitte
 - Live application: not deployed yet
 - Example receipt: available after the first genuine onchain stamp
 - Example project timeline: available after the first genuine onchain stamp
-- Registry contract: not deployed yet
+- Registry contract: [`0x51C73D47f44527922ddca87767d27774091618b5`](https://testnet.monadscan.com/address/0x51C73D47f44527922ddca87767d27774091618b5)
+- Deployment transaction: [`0xf4cea4a2…e04ca3`](https://testnet.monadscan.com/tx/0xf4cea4a22ea2ba6b9474961a1df59ee98b3444e5a04706d7e5eae31d90e04ca3)
+- Deployment block: `46306117`
+- Source verification: exact runtime match through Sourcify
 - Network: Monad Testnet, chain ID `10143`
 - Explorer: [Monadscan Testnet](https://testnet.monadscan.com)
 - Source: [github.com/kopachlager/ShipStamp](https://github.com/kopachlager/ShipStamp)
 
-These values are intentionally not fabricated. They will be replaced only after deployment and a confirmed real transaction.
+The application and receipt links remain intentionally unset until the public deployment and first confirmed self-stamp exist.
 
 ## Product flow
 
