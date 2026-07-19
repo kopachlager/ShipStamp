@@ -10,23 +10,11 @@ const MANIFEST_FIELDS = [
 export function ProofFlowGraphic() {
   return (
     <figure
-      className="proof-field relative min-h-[25rem] overflow-hidden border border-border bg-[#060708] p-5 sm:min-h-[31rem] sm:p-7"
+      className="relative min-h-[25rem] overflow-hidden px-1 py-5 sm:min-h-[31rem] sm:px-3 sm:py-7"
       role="img"
       aria-label="A public Git commit flows through a deployment manifest into a build receipt recorded on Monad"
     >
-      <pre className="ascii-corner left-4 top-12" aria-hidden="true">
-        {`01 10 01 01
-10 11 00 10
-01 01 10 11
-11 00 01 10`}
-      </pre>
-      <pre className="ascii-corner bottom-4 right-5 text-right" aria-hidden="true">
-        {`::..::..::
-..::..::..
-::..::..::`}
-      </pre>
-
-      <div className="relative z-10 flex items-center justify-between border-b border-border/80 pb-4 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted-foreground">
+      <div className="relative z-10 flex items-center justify-between font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted-foreground">
         <span>Proof route / v1</span>
         <span className="text-primary">Monad 10143</span>
       </div>
@@ -39,7 +27,7 @@ export function ProofFlowGraphic() {
         <ReceiptStamp />
       </div>
 
-      <figcaption className="relative z-10 mt-5 border-t border-border/80 pt-4 font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted-foreground">
+      <figcaption className="relative z-10 mt-5 font-mono text-[0.58rem] uppercase tracking-[0.1em] text-muted-foreground">
         Public commit <span className="text-primary">→</span> live manifest{" "}
         <span className="text-primary">→</span> wallet-signed receipt
       </figcaption>
@@ -77,17 +65,17 @@ function GitCommitGraph() {
 
 function ManifestDocument() {
   return (
-    <div className="manifest-sheet relative min-w-0 bg-[#080a0b] px-3 py-5 sm:px-5 sm:py-6">
+    <div className="relative min-w-0 px-2 py-5 sm:px-4 sm:py-6">
       <p className="font-mono text-[0.52rem] uppercase tracking-[0.08em] text-primary sm:text-[0.62rem]">
         ShipStamp manifest
       </p>
       <div className="mt-5 space-y-3">
         {MANIFEST_FIELDS.map((field) => (
-          <div key={field}>
-            <p className="truncate font-mono text-[0.48rem] uppercase tracking-[0.06em] text-foreground sm:text-[0.58rem]">
+          <div key={field} className="flex min-w-0 items-center gap-2">
+            <span className="font-mono text-[0.5rem] text-primary" aria-hidden="true">›</span>
+            <p className="truncate font-mono text-[0.48rem] uppercase tracking-[0.06em] text-foreground/80 sm:text-[0.58rem]">
               {field}
             </p>
-            <div className="mt-1 h-px bg-border" />
           </div>
         ))}
       </div>
