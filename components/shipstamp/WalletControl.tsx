@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { monadTestnet } from "@/lib/chain/monad-testnet";
 
 export function WalletControl() {
+  const isHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getHydratedSnapshot,
+    getServerSnapshot,
+  );
   const { address, chainId, isConnected, isConnecting } = useAccount();
   const { connectors, connectAsync } = useConnect();
   const { disconnect } = useDisconnect();
@@ -42,16 +47,16 @@ export function WalletControl() {
     }
   };
 
-  if (!isConnected) {
+  if (!isHydrated || !isConnected) {
     return (
       <div>
         <Button
           type="button"
           onClick={connect}
-          disabled={isConnecting}
+          disabled={isHydrated && isConnecting}
           size="lg"
         >
-          {isConnecting ? "Connecting wallet…" : "Connect wallet"}
+          {isHydrated && isConnecting ? "Connecting wallet…" : "Connect wallet"}
         </Button>
         {error ? (
           <Alert variant="destructive" className="mt-3 max-w-md rounded-[2px]">
@@ -95,6 +100,18 @@ export function WalletControl() {
       ) : null}
     </div>
   );
+}
+
+function subscribeToHydration() {
+  return () => undefined;
+}
+
+function getHydratedSnapshot() {
+  return true;
+}
+
+function getServerSnapshot() {
+  return false;
 }
 
 function shortenAddress(address?: string) {
