@@ -83,8 +83,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {repository}
         </h1>
         <p className="mt-5 max-w-2xl text-muted-foreground">
-          Public build claims read directly from ShipStampRegistry. A connected
-          wallet is not required.
+          Verified build receipts read directly from ShipStampRegistry. Each
+          entry records a deployment-manifest hash; a wallet is not required
+          to inspect the timeline.
         </p>
         <a
           href={`https://github.com/${repository}`}

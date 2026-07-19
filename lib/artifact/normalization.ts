@@ -2,6 +2,7 @@ import {
   COMMIT_SHA_LENGTH,
   MAX_DEPLOYMENT_URL_LENGTH,
   MAX_MILESTONE_BYTES,
+  MAX_PROJECT_BYTES,
   MAX_REPOSITORY_URL_LENGTH,
 } from "@/lib/validation/constants";
 import { InputValidationError } from "@/lib/validation/errors";
@@ -13,8 +14,8 @@ export type NormalizedRepository = {
   url: string;
 };
 
-const OWNER_PATTERN = /^[a-zd](?:[a-zd-]{0,37}[a-zd])?$/i;
-const REPOSITORY_PATTERN = /^[a-zd._-]+$/i;
+const OWNER_PATTERN = /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i;
+const REPOSITORY_PATTERN = /^[a-z\d._-]+$/i;
 const FULL_COMMIT_PATTERN = new RegExp(`^[a-fA-F0-9]{${COMMIT_SHA_LENGTH}}$`);
 
 export function parseGitHubRepositoryUrl(input: string): NormalizedRepository {
@@ -119,10 +120,10 @@ export function normalizeDeploymentUrl(input: string): string {
       "Public production submissions must use HTTPS.",
     );
   }
-  if (url.username || url.password || !url.hostname) {
+  if (url.username || url.password || !url.hostname || url.port) {
     throw new InputValidationError(
       "INVALID_DEPLOYMENT_URL",
-      "The deployment URL contains unsupported credentials or no hostname.",
+      "The deployment URL contains unsupported credentials, a custom port, or no hostname.",
     );
   }
 
@@ -134,9 +135,29 @@ export function normalizeDeploymentUrl(input: string): string {
     );
   }
 
-  const pathname = url.pathname === "/" ? "" : url.pathname.replace(/\/$/, "");
-  const port = url.port ? `:${url.port}` : "";
-  return `https://${hostname}${port}${pathname}${url.search}`;
+  if ((url.pathname && url.pathname !== "/") || url.search) {
+    throw new InputValidationError(
+      "INVALID_DEPLOYMENT_URL",
+      "ShipStamp supports deployment origins only, without paths or query parameters.",
+    );
+  }
+
+  return `https://${hostname}`;
+}
+
+export function normalizeProjectName(input: string): string {
+  const value = input.trim().replace(/\s+/g, " ");
+  const byteLength = new TextEncoder().encode(value).length;
+  if (!value) {
+    throw new InputValidationError("INVALID_PROJECT", "Enter a project name.");
+  }
+  if (byteLength > MAX_PROJECT_BYTES) {
+    throw new InputValidationError(
+      "INVALID_PROJECT",
+      `Keep the project name within ${MAX_PROJECT_BYTES} UTF-8 bytes.`,
+    );
+  }
+  return value;
 }
 
 export function normalizeMilestone(input: string): string {
@@ -183,4 +204,3 @@ function isPublicHostname(hostname: string): boolean {
 
   return plainHostname.includes(".");
 }
-

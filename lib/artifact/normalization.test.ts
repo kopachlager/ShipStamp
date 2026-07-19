@@ -3,6 +3,7 @@ import {
   normalizeCommitSha,
   normalizeDeploymentUrl,
   normalizeMilestone,
+  normalizeProjectName,
   parseGitHubRepositoryUrl,
 } from "./normalization";
 
@@ -35,18 +36,21 @@ describe("canonical field normalization", () => {
     expect(() => normalizeCommitSha("z".repeat(40))).toThrow("full 40-character");
   });
 
-  it("normalizes an HTTPS deployment URL deterministically", () => {
-    expect(normalizeDeploymentUrl("https://EXAMPLE.com:443/releases/v1/#details")).toBe(
-      "https://example.com/releases/v1",
+  it("normalizes an HTTPS deployment origin deterministically", () => {
+    expect(normalizeDeploymentUrl("https://EXAMPLE.com:443/#details")).toBe(
+      "https://example.com",
     );
-    expect(normalizeDeploymentUrl("https://example.com/?build=1&channel=stable")).toBe(
-      "https://example.com?build=1&channel=stable",
+    expect(() => normalizeDeploymentUrl("https://example.com/releases/v1")).toThrow(
+      "deployment origins only",
+    );
+    expect(() => normalizeDeploymentUrl("https://example.com/?build=1")).toThrow(
+      "deployment origins only",
     );
   });
 
   it("rejects non-HTTPS and private deployment hosts", () => {
     expect(() => normalizeDeploymentUrl("http://example.com")).toThrow("must use HTTPS");
-    expect(() => normalizeDeploymentUrl("https://localhost:3000")).toThrow("publicly reachable");
+    expect(() => normalizeDeploymentUrl("https://localhost")).toThrow("publicly reachable");
     expect(() => normalizeDeploymentUrl("https://192.168.1.5")).toThrow("publicly reachable");
   });
 
@@ -54,5 +58,9 @@ describe("canonical field normalization", () => {
     expect(normalizeMilestone("  First end-to-end receipt  ")).toBe("First end-to-end receipt");
     expect(() => normalizeMilestone("🚢".repeat(71))).toThrow("280 UTF-8 bytes");
   });
-});
 
+  it("normalizes project names without changing human-readable casing", () => {
+    expect(normalizeProjectName("  ShipStamp   Registry ")).toBe("ShipStamp Registry");
+    expect(() => normalizeProjectName(" ")).toThrow("project name");
+  });
+});

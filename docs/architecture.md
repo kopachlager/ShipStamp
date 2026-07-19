@@ -1,81 +1,25 @@
-# P0 architecture
+# ShipStamp proof architecture
 
-## Boundary
+The current architecture replaces ShipStamp's original timestamped deployment claim with a verified live-manifest proof. The complete product and operational documentation lives in the [README](../README.md); this document records the implementation boundary that must remain stable across the contract and application.
 
-P0 establishes the contract as the authoritative source of build receipts. There is no frontend, GitHub API route, database, authentication system, indexer, or deployed contract yet.
+## Proof boundary
 
-## Onchain data model
+GitHub proves that the specified public commit existed when its API was queried. The live deployment proves that it currently serves a ShipStamp manifest intentionally naming the repository, commit, deployment origin, project, and wallet. Monad records the canonical manifest hash, wallet sender, milestone, and chain timestamp.
 
-Each `BuildStamp` stores a sequential ID, builder wallet, normalized repository, lowercase full commit SHA, normalized deployment URL, milestone, artifact hash, and block timestamp. The builder is always `msg.sender`; there is no delegated stamping, owner, administrator, upgrade proxy, mutation method, payable method, token, or approval.
+The contract cannot fetch offchain data and does not pretend to. It independently recomputes the hash from the receipt fields and `msg.sender`, preventing a caller from substituting another builder address.
 
-The canonical repository string is also hashed into a project key. The registry maps this key to a chronological array of stamp IDs. It exposes bounded pagination for project stamps and a separate project count, avoiding reliance on historical log support or an external indexer. `BuildStamped` events remain available for explorers and independent event consumers.
+## Canonical version 1 fields
 
-## Canonical normalization
+The fixed ABI-encoding order is `schemaVersion`, `project`, `repository`, `commit`, `deploymentUrl`, `wallet`. The hash is `keccak256(abi.encode(...))`. The TypeScript and Solidity suites share the fixed vector documented in the README.
 
-Normalization is performed by the application before contract submission. The contract enforces non-empty and maximum byte lengths, requires a 40-byte commit string, and independently checks the artifact hash. The P1 server and shared TypeScript utility will enforce URL syntax, hostname restrictions, lowercase hexadecimal characters, and the rules below.
+Deployment URLs are HTTPS origins only. The manifest path is always `/.well-known/shipstamp.json`. Unknown JSON fields are rejected so schema extensions require an explicit new version.
 
-### Repository
+## Retrieval and duplicates
 
-1. Parse an HTTPS GitHub URL whose hostname is exactly `github.com`.
-2. Accept exactly two non-empty path segments: owner and repository.
-3. Remove an optional `.git` suffix from the repository segment.
-4. URL parsing removes the query and fragment; a trailing slash is accepted.
-5. Lowercase the resulting `owner/repository` identifier.
+The repository identifier is hashed to a project key that indexes a chronological array of stamp IDs. Clients page through contract calls, while events provide transaction hashes when the configured RPC supports the requested block range.
 
-### Commit
+The exact duplicate key includes builder, repository, commit, deployment origin, and manifest hash. Milestone is deliberately excluded. The registry has no administrator, mutation function, proxy, payable entry point, token, or approval mechanism.
 
-Require exactly 40 hexadecimal characters and lowercase them. Short or malformed SHAs are rejected rather than expanded or silently corrected.
+## Offchain safety boundary
 
-### Deployment URL
-
-1. Parse an absolute `https://` URL.
-2. Reject credentials and an empty hostname.
-3. Lowercase the hostname and remove the default HTTPS port.
-4. Remove the fragment.
-5. Remove the pathname only when it is exactly `/`; otherwise preserve the path.
-6. Preserve query parameters and their submitted ordering. P1 will document that these are intentionally part of the artifact identity.
-
-## Artifact hash
-
-The canonical artifact input is UTF-8 text:
-
-```text
-normalizedRepository + ":" + lowercaseCommitSha + ":" + normalizedDeploymentUrl
-```
-
-The artifact hash is:
-
-```text
-keccak256(utf8Bytes(canonicalArtifactInput))
-```
-
-The frontend will display both values before transaction confirmation. The contract recomputes this hash from its three string arguments and rejects a mismatched value. ShipStamp does not download or hash deployed application files.
-
-## Exact duplicates
-
-The duplicate key is:
-
-```text
-keccak256(abi.encode(builderWallet, keccak256(repository), keccak256(commitSha), keccak256(deploymentUrl)))
-```
-
-Milestone text and artifact hash are intentionally excluded. The same builder cannot stamp the same canonical repository, commit, and deployment twice merely by changing the description. A changed commit, deployment URL, or builder wallet creates a different key and is accepted.
-
-## Contract input limits
-
-- repository: 1–200 bytes
-- commit SHA: exactly 40 bytes
-- deployment URL: 1–2,048 bytes
-- milestone: 1–280 bytes
-- project page size: at most 100 stamps per call
-
-Solidity does not attempt complete URL normalization. Format validation belongs to the P1 server and shared client utility; the contract enforces essential bounds, immutability, builder identity, duplicate prevention, and hash integrity.
-
-## Security notes
-
-- All strings are untrusted display data and must be rendered as text by clients.
-- Canonicalization must remain centralized in P1; a mismatch will revert onchain.
-- `block.timestamp` is the chain timestamp, not an exact wall-clock oracle.
-- Public RPC rate limits and temporary unavailability must be handled by clients.
-- Contract storage is permanent and public; users should never submit secrets or personal data.
-
+The deployment verifier resolves and inspects DNS results, rejects local/private destinations, validates every redirect, limits redirects, time, request size, and response size, and fetches without user credentials. Public receipt pages use the same verifier for current-state rechecks. See the README for known residual limitations.

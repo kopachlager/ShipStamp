@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s — ShipStamp",
   },
   description:
-    "Verify a GitHub commit, connect it to a live deployment, and permanently stamp the build on Monad.",
+    "Verify a GitHub commit, confirm it from your live deployment, and permanently stamp the build on Monad.",
 };
 
 export default function RootLayout({

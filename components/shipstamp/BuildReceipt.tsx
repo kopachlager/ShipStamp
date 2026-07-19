@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { CopyField } from "@/components/shipstamp/CopyField";
 import { ExplorerLink } from "@/components/shipstamp/ExplorerLink";
+import { LiveManifestStatus } from "@/components/shipstamp/LiveManifestStatus";
 import { ShareReceipt } from "@/components/shipstamp/ShareReceipt";
+import { VerificationChecklist } from "@/components/shipstamp/VerificationChecklist";
 import { VerifiedStamp } from "@/components/shipstamp/VerifiedStamp";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,6 +14,7 @@ import { SHIPSTAMP_CONTRACT_ADDRESS } from "@/lib/contract/config";
 import type { BuildStampRecord } from "@/lib/contract/types";
 import { formatTimestamp, safeHttpsUrl } from "@/lib/format";
 import type { VerifiedGitHubCommit } from "@/lib/github/types";
+import { MANIFEST_PATH } from "@/lib/validation/constants";
 
 type BuildReceiptProps = {
   stamp: BuildStampRecord;
@@ -27,6 +30,9 @@ export function BuildReceipt({
   heading = "Build stamped",
 }: BuildReceiptProps) {
   const deploymentLink = safeHttpsUrl(stamp.deploymentUrl);
+  const manifestUrl = deploymentLink
+    ? `${stamp.deploymentUrl}${MANIFEST_PATH}`
+    : null;
   const receiptPath = `/stamp/${stamp.id}`;
   const projectPath = getProjectPath(stamp.repository);
 
@@ -46,7 +52,15 @@ export function BuildReceipt({
       </div>
       <Separator />
 
+      <div className="grid gap-6 border-b border-border py-7 sm:grid-cols-[1fr_auto] sm:items-center">
+        <VerificationChecklist />
+        <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+          Recorded on Monad
+        </p>
+      </div>
+
       <dl className="grid gap-x-8 gap-y-6 py-7 sm:grid-cols-2">
+        <ReceiptField label="Project" value={stamp.project} />
         <ReceiptField label="Repository" value={stamp.repository} />
         <ReceiptField label="Milestone" value={stamp.milestone} />
         <ReceiptField label="Commit SHA" value={stamp.commitSha} />
@@ -57,15 +71,26 @@ export function BuildReceipt({
         <ReceiptField label="Builder wallet" value={stamp.builder} />
         <ReceiptField label="Network" value="Monad Testnet / 10143" />
         <div className="sm:col-span-2">
-          <ReceiptField
-            label="Deployment claim"
-            value={stamp.deploymentUrl}
-            href={deploymentLink}
-          />
+          <ReceiptField label="Deployment" value={stamp.deploymentUrl} href={deploymentLink} />
         </div>
         <div className="sm:col-span-2">
-          <CopyField label="Artifact hash" value={stamp.artifactHash} />
+          <ReceiptField label="Manifest URL" value={manifestUrl ?? "Unavailable"} href={manifestUrl} />
         </div>
+        <div className="sm:col-span-2">
+          <CopyField label="Manifest hash" value={stamp.manifestHash} />
+        </div>
+        <ReceiptField label="Proof schema" value={stamp.proofSchemaVersion} />
+        {github ? (
+          <ReceiptField
+            label="Commit author"
+            value={github.commitAuthorUsername ?? github.commitAuthorName}
+          />
+        ) : null}
+        {github ? (
+          <div className="sm:col-span-2">
+            <ReceiptField label="Commit message" value={github.commitMessage} />
+          </div>
+        ) : null}
         {transactionHash ? (
           <div className="sm:col-span-2">
             <CopyField label="Transaction hash" value={transactionHash} />
@@ -82,6 +107,8 @@ export function BuildReceipt({
         ) : null}
       </dl>
 
+      <LiveManifestStatus stamp={stamp} />
+
       <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border pt-6 text-sm">
         {github ? (
           <Button asChild variant="link">
@@ -92,6 +119,13 @@ export function BuildReceipt({
         ) : null}
         {transactionHash ? (
           <ExplorerLink transactionHash={transactionHash} />
+        ) : null}
+        {manifestUrl ? (
+          <Button asChild variant="link">
+            <a href={manifestUrl} target="_blank" rel="noreferrer">
+              Live manifest ↗
+            </a>
+          </Button>
         ) : null}
         <Button asChild variant="link">
           <Link href={receiptPath}>Public receipt</Link>

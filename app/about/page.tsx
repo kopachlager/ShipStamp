@@ -17,19 +17,19 @@ export default function AboutPage() {
         </Badge>
       </div>
       <h1 className="display-title mt-7 max-w-4xl text-6xl leading-[0.95] sm:text-8xl">
-        A narrow, public build claim.
+        A public proof of a build connection.
       </h1>
       <p className="mt-8 max-w-2xl text-lg leading-8 text-muted-foreground">
         ShipStamp addresses a practical indie-builder problem: a polished
         application and a current repository do not show when a specific build
-        was publicly claimed or how it progressed.
+        was connected to a live deployment and publicly recorded.
       </p>
 
       <div className="mt-14 border-t border-border">
         <AboutSection number="01" title="The solution">
-          A builder verifies a public GitHub commit, reviews a deterministic
-          artifact identity, and signs one Monad transaction. Public receipt and
-          timeline pages read the immutable claim.
+          A builder verifies a public GitHub commit, publishes a versioned
+          manifest at the live deployment, and records the matching manifest
+          hash through a wallet transaction on Monad.
         </AboutSection>
         <AboutSection number="02" title="Why onchain">
           The record should remain independently inspectable without trusting
@@ -37,14 +37,16 @@ export default function AboutPage() {
           signature and chain timestamp are the useful part.
         </AboutSection>
         <AboutSection number="03" title="What ShipStamp proves">
-          A wallet recorded a repository, commit SHA, deployment URL, milestone,
-          and artifact hash at a Monad block timestamp. The referenced public
-          commit existed when GitHub verification ran.
+          The public commit existed at verification time. The live deployment
+          served a manifest naming that repository, commit, deployment origin,
+          project, and submitting wallet. The wallet recorded its matching hash
+          at the Monad block timestamp.
         </AboutSection>
         <AboutSection number="04" title="What it does not prove">
-          Code authorship, repository ownership, deployment security, current
-          deployment contents, project trustworthiness, repository immutability,
-          or legal ownership.
+          That every deployed file came from the commit; GitHub ownership;
+          identity between the GitHub author and wallet; code safety,
+          originality, or trustworthiness; continuous deployment history; or
+          legal ownership.
         </AboutSection>
       </div>
 
@@ -59,14 +61,19 @@ export default function AboutPage() {
           <Separator />
           <p className="mt-6 max-w-3xl leading-7 text-muted-foreground">
             Next.js validates public commits server-side through GitHub&apos;s
-            REST API. An injected EVM wallet submits the canonical build claim
-            to ShipStampRegistry on Monad Testnet. Receipt and project pages use
-            direct contract reads; GitHub supplies display metadata only when
-            available.
+            REST API. A server-only verifier safely fetches the fixed manifest
+            path from a public HTTPS origin. An injected EVM wallet submits the
+            canonical manifest hash to ShipStampRegistry on Monad Testnet.
+            Receipt and project pages read the contract directly and can recheck
+            the currently served manifest.
           </p>
           <div className="mt-8 border border-border bg-card p-5 font-mono text-[0.68rem] leading-6 text-muted-foreground">
             <p>
               <span className="text-primary">USER</span> → NEXT.JS → GITHUB REST
+            </p>
+            <p>
+              <span className="text-primary">DEPLOYMENT</span> → WELL-KNOWN
+              MANIFEST → SERVER VERIFIER
             </p>
             <p>
               <span className="text-primary">WALLET</span> → SHIPSTAMP REGISTRY
