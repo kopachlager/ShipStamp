@@ -60,7 +60,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="create-receipt" className="shipstamp-dots relative scroll-mt-14 overflow-hidden bg-[#090b0d]">
+      <section id="create-receipt" className="shipstamp-dots relative scroll-mt-14 overflow-hidden bg-background">
         <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.38fr_1fr] lg:gap-16">
           <div>
             <p className="font-mono text-xs tracking-[0.14em] text-primary uppercase">
