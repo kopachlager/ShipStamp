@@ -5,6 +5,8 @@ export type ValidationErrorCode =
   | "INVALID_COMMIT_SHA"
   | "INVALID_DEPLOYMENT_URL"
   | "PRIVATE_DEPLOYMENT_HOST"
+  | "INVALID_PROJECT"
+  | "INVALID_WALLET"
   | "INVALID_MILESTONE";
 
 export class InputValidationError extends Error {
@@ -16,4 +18,3 @@ export class InputValidationError extends Error {
     this.name = "InputValidationError";
   }
 }
-

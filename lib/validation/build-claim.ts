@@ -2,11 +2,12 @@ import {
   normalizeCommitSha,
   normalizeDeploymentUrl,
   normalizeMilestone,
+  normalizeProjectName,
   parseGitHubRepositoryUrl,
 } from "@/lib/artifact/normalization";
-import { getArtifactHash, getCanonicalArtifactInput } from "@/lib/artifact/hash";
 
 export type BuildClaimInput = {
+  project: string;
   repositoryUrl: string;
   commitSha: string;
   deploymentUrl: string;
@@ -14,34 +15,22 @@ export type BuildClaimInput = {
 };
 
 export type PreparedBuildClaim = {
+  project: string;
   repository: string;
   repositoryUrl: string;
   commitSha: string;
   deploymentUrl: string;
   milestone: string;
-  canonicalArtifactInput: string;
-  artifactHash: `0x${string}`;
 };
 
 export function prepareBuildClaim(input: BuildClaimInput): PreparedBuildClaim {
   const repository = parseGitHubRepositoryUrl(input.repositoryUrl);
-  const commitSha = normalizeCommitSha(input.commitSha);
-  const deploymentUrl = normalizeDeploymentUrl(input.deploymentUrl);
-  const milestone = normalizeMilestone(input.milestone);
-  const canonicalArtifactInput = getCanonicalArtifactInput(
-    repository.identifier,
-    commitSha,
-    deploymentUrl,
-  );
-
   return {
+    project: normalizeProjectName(input.project),
     repository: repository.identifier,
     repositoryUrl: repository.url,
-    commitSha,
-    deploymentUrl,
-    milestone,
-    canonicalArtifactInput,
-    artifactHash: getArtifactHash(repository.identifier, commitSha, deploymentUrl),
+    commitSha: normalizeCommitSha(input.commitSha),
+    deploymentUrl: normalizeDeploymentUrl(input.deploymentUrl),
+    milestone: normalizeMilestone(input.milestone),
   };
 }
-

@@ -43,8 +43,8 @@ export default async function HomePage() {
               <span className="text-primary">receipt.</span>
             </h1>
             <p className="mt-7 max-w-md text-base leading-7 text-muted-foreground">
-              Connect a public commit, a live deployment, and your wallet in one
-              Monad receipt.
+              Verify a GitHub commit, confirm it from your live deployment, and
+              permanently stamp the build on Monad.
             </p>
             <a
               href="#create-receipt"
@@ -66,8 +66,13 @@ export default async function HomePage() {
               GitHub → Monad
             </p>
             <h2 className="display-title mt-4 max-w-sm text-5xl leading-[0.95] sm:text-6xl">
-              Stamp what shipped.
+              Prove the connection.
             </h2>
+            <p className="mt-5 max-w-sm text-sm leading-6 text-muted-foreground">
+              GitHub confirms the commit exists. Your live manifest connects
+              that commit and deployment to the wallet. Monad records the
+              matching manifest hash.
+            </p>
           </div>
           <BuildStampForm />
         </div>

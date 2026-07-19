@@ -4,6 +4,7 @@ import { prepareBuildClaim } from "./build-claim";
 describe("prepareBuildClaim", () => {
   it("normalizes and hashes a valid form submission", () => {
     const claim = prepareBuildClaim({
+      project: "  ShipStamp  ",
       repositoryUrl: "https://github.com/KopachLager/ShipStamp.git",
       commitSha: "A".repeat(40),
       deploymentUrl: "https://SHIPSTAMP.example/",
@@ -11,18 +12,18 @@ describe("prepareBuildClaim", () => {
     });
 
     expect(claim).toMatchObject({
+      project: "ShipStamp",
       repository: "kopachlager/shipstamp",
       commitSha: "a".repeat(40),
       deploymentUrl: "https://shipstamp.example",
       milestone: "Public receipt released",
     });
-    expect(claim.canonicalArtifactInput).toContain("kopachlager/shipstamp:");
-    expect(claim.artifactHash).toMatch(/^0x[a-f0-9]{64}$/);
   });
 
   it("rejects invalid form fields before GitHub or wallet actions", () => {
     expect(() =>
       prepareBuildClaim({
+        project: "",
         repositoryUrl: "not a url",
         commitSha: "short",
         deploymentUrl: "http://localhost:3000",
@@ -31,4 +32,3 @@ describe("prepareBuildClaim", () => {
     ).toThrow("complete GitHub repository URL");
   });
 });
-
