@@ -1,6 +1,6 @@
 # ShipStamp
 
-ShipStamp creates public software-build receipts connecting a real GitHub commit, a matching live deployment manifest, a builder wallet, and a Monad timestamp.
+ShipStamp is an open-source proof of concept for creating public software-build receipts that connect a real GitHub commit, a matching live deployment manifest, a builder wallet, and a Monad timestamp.
 
 > Every build leaves a receipt.
 
@@ -228,4 +228,4 @@ ShipStamp is a new solo project for the BuildAnything Spark hackathon on Monad. 
 
 ## License
 
-MIT
+ShipStamp is open-source software available under the [MIT License](LICENSE).

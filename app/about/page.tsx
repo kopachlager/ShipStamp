@@ -20,9 +20,10 @@ export default function AboutPage() {
         A public proof of a build connection.
       </h1>
       <p className="mt-8 max-w-2xl text-lg leading-8 text-muted-foreground">
-        ShipStamp addresses a practical indie-builder problem: a polished
-        application and a current repository do not show when a specific build
-        was connected to a live deployment and publicly recorded.
+        ShipStamp is an open-source proof of concept addressing a practical
+        indie-builder problem: a polished application and a current repository
+        do not show when a specific build was connected to a live deployment
+        and publicly recorded.
       </p>
 
       <div className="mt-14 border-t border-border">
