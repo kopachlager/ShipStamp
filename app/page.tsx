@@ -34,8 +34,8 @@ export default async function HomePage() {
 
   return (
     <main>
-      <section className="shipstamp-grid relative min-h-[calc(100svh-3.5rem)] overflow-hidden">
-        <div className="mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-7xl items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:py-16">
+      <section className="shipstamp-dots relative min-h-[calc(100svh-3.5rem)] overflow-hidden">
+        <div className="relative z-10 mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-7xl items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16 lg:py-16">
           <div className="relative z-10">
             <p className="mb-6 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-primary">
               Git commit → live manifest → Monad
@@ -60,8 +60,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="create-receipt" className="proof-section relative scroll-mt-14 bg-[#090b0d]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.38fr_1fr] lg:gap-16">
+      <section id="create-receipt" className="shipstamp-dots relative scroll-mt-14 overflow-hidden bg-[#090b0d]">
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.38fr_1fr] lg:gap-16">
           <div>
             <p className="font-mono text-xs tracking-[0.14em] text-primary uppercase">
               [ GitHub → deployment → Monad ]
@@ -79,8 +79,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="shipstamp-grid bg-background">
-        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
+      <section className="shipstamp-dots overflow-hidden bg-background">
+        <div className="relative z-10 mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
           <div className="mb-10 grid gap-5 border-b border-border pb-7 sm:grid-cols-[1fr_auto] sm:items-end">
             <div>
               <p className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-primary">
