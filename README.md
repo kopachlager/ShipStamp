@@ -15,8 +15,9 @@ ShipStamp does not prove that every deployed file was produced from the submitte
 ## Status and public links
 
 - Live application: [ship-stamp.vercel.app](https://ship-stamp.vercel.app)
-- Example receipt: available after the first genuine onchain stamp
-- Example project timeline: available after the first genuine onchain stamp
+- Example receipt: [stamp #1](https://ship-stamp.vercel.app/stamp/1)
+- Example project timeline: [kopachlager/shipstamp](https://ship-stamp.vercel.app/project/kopachlager/shipstamp)
+- First verified build transaction: [`0x05b6f2f6…701f01`](https://testnet.monadscan.com/tx/0x05b6f2f6a0aa927255baf6b23d37b705647e9ffc92dfc1efd539938141701f01)
 - Registry contract: [`0x51C73D47f44527922ddca87767d27774091618b5`](https://testnet.monadscan.com/address/0x51C73D47f44527922ddca87767d27774091618b5)
 - Deployment transaction: [`0xf4cea4a2…e04ca3`](https://testnet.monadscan.com/tx/0xf4cea4a22ea2ba6b9474961a1df59ee98b3444e5a04706d7e5eae31d90e04ca3)
 - Deployment block: `46306117`
@@ -25,7 +26,7 @@ ShipStamp does not prove that every deployed file was produced from the submitte
 - Explorer: [Monadscan Testnet](https://testnet.monadscan.com)
 - Source: [github.com/kopachlager/ShipStamp](https://github.com/kopachlager/ShipStamp)
 
-The application and receipt links remain intentionally unset until the public deployment and first confirmed self-stamp exist.
+Stamp #1 is ShipStamp's genuine self-verification milestone. Its public GitHub commit, live manifest, builder wallet, manifest hash, and confirmed Monad transaction can be inspected independently through the links above.
 
 ## Product flow
 

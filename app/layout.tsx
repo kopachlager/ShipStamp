@@ -4,6 +4,8 @@ import { Web3Provider } from "@/components/shipstamp/Web3Provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer10 } from "@/components/beste/block/footer10";
+import { getExplorerAddressUrl } from "@/lib/chain/monad-testnet";
+import { SHIPSTAMP_CONTRACT_ADDRESS } from "@/lib/contract/config";
 import "@fontsource-variable/ibm-plex-sans";
 import "@fontsource-variable/space-grotesk";
 import "@fontsource/ibm-plex-mono/400.css";
@@ -64,7 +66,12 @@ export default function RootLayout({
             <Footer10
               links={[
                 { label: "About", href: "/about" },
-                { label: "Contract", href: "https://testnet.monadscan.com" },
+                {
+                  label: "Contract",
+                  href: SHIPSTAMP_CONTRACT_ADDRESS
+                    ? getExplorerAddressUrl(SHIPSTAMP_CONTRACT_ADDRESS)
+                    : "https://testnet.monadscan.com",
+                },
                 {
                   label: "GitHub",
                   href: "https://github.com/kopachlager/ShipStamp",
