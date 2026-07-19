@@ -14,7 +14,7 @@ ShipStamp does not prove that every deployed file was produced from the submitte
 
 ## Status and public links
 
-- Live application: not deployed yet
+- Live application: [ship-stamp.vercel.app](https://ship-stamp.vercel.app)
 - Example receipt: available after the first genuine onchain stamp
 - Example project timeline: available after the first genuine onchain stamp
 - Registry contract: [`0x51C73D47f44527922ddca87767d27774091618b5`](https://testnet.monadscan.com/address/0x51C73D47f44527922ddca87767d27774091618b5)
