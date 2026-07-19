@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1",
+  "project": "ShipStamp",
+  "repository": "kopachlager/shipstamp",
+  "commit": "c0425fb09144001fdb57e7b13e977d5b85d1e1ae",
+  "deploymentUrl": "https://ship-stamp.vercel.app",
+  "wallet": "0x5cd82f40b71f5a4ea7343ce7aa10987d5f197177"
+}
