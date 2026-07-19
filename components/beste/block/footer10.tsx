@@ -27,6 +27,9 @@ export function Footer10({ links, className }: Footer10Props) {
             <span className="text-primary">]</span>
           </Link>
           <p className="mt-4 font-mono text-[0.58rem] tracking-[0.08em] text-muted-foreground uppercase">
+            Open-source proof of concept · MIT
+          </p>
+          <p className="mt-2 font-mono text-[0.58rem] tracking-[0.08em] text-muted-foreground uppercase">
             UI references:{" "}
             <a
               href="https://ui.beste.co/blocks"
